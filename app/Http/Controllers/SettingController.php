@@ -1,15 +1,15 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use App\Http\Requests\SettingRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Auth;
+use DB;
 
-
-class SettingsController extends Controller
+class SettingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -79,17 +79,17 @@ class SettingsController extends Controller
         // validate incoming request
         $settings = Setting::findOrFail($id);
         
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $path = $logo->store('images' , 'public');
-            $settings->logo =  $path;
-        } 
-        
-        if ($request->hasFile('seal')) {
-            $seal = $request->file('seal');
-            $path = $seal->store('images' , 'public');
-            $settings->seal =  $path;
-        }
+//        if ($request->hasFile('logo')) {
+//            $logo = $request->file('logo');
+//            $path = $logo->store('images' , 'public');
+//            $settings->logo =  $path;
+//        } 
+//        
+//        if ($request->hasFile('seal')) {
+//            $seal = $request->file('seal');
+//            $path = $seal->store('images' , 'public');
+//            $settings->seal =  $path;
+//        }
         $settings->email = $request->input('email');
         $settings->siteName = $request->input('siteName');
         $settings->siteNameEng = $request->input('siteNameEng');
@@ -106,11 +106,16 @@ class SettingsController extends Controller
         $settings->twitter = $request->input('twitter');
         $settings->instegram = $request->input('instegram');
         $settings->snapchat = $request->input('snapchat');
-        $settings->NumOfStudies = $request->input('NumOfMemberships');
+        $settings->num_of_elements = $request->input('num_of_elements');
         $settings->privacy = $request->input('privacy');
+        $settings->logo = parse_url($request->logo)['path'];
+        $settings->seal = parse_url($request->seal)['path'];
+        
         $settings->save();
-        return redirect(route('admin.settings-index'))->with('message_flash', sprintf('تمت تعديل الإعدادات بنجاح ! ')); 
-
+        return redirect(route('admin.settings.index'))->with([
+                    'message_flash'=> sprintf('تمت تعديل الإعدادات بنجاح!'),
+                    'alert' => 'alert-solid-success'
+                ]);
     }
 
     /**

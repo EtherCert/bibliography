@@ -17,10 +17,12 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('name');
+            $table->string('identity');
+            $table->string('mobile');
             $table->string('email');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('birthdate')->nullable();
+            $table->string('birthday')->nullable();
             $table->string('degree')->nullable();
             $table->string('major')->nullable();
             $table->string('workplace')->nullable();
@@ -28,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('country')->nullable();
             $table->string('city')->nullable();
             $table->integer('type')->default(0); //انواع المستخدمين عضو0، أدمن 1، معتمد 2، مراجع 3;
+            $table->enum('status', ['مفعل','غير مفعل'])->default('غير مفعل');
             $table->rememberToken();
             $table->timestamps();
         });

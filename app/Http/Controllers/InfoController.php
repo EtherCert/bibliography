@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Info;
 use Illuminate\Http\Request;
+use App\Models\Info;
 
 class InfoController extends Controller
 {
@@ -14,7 +14,8 @@ class InfoController extends Controller
      */
     public function index()
     {
-        //
+        $infos = Info::all();
+        return view('admin.infos.info')->with('infos', $infos);
     }
 
     /**
@@ -41,10 +42,10 @@ class InfoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Info  $info
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Info $info)
+    public function show($id)
     {
         //
     }
@@ -52,10 +53,10 @@ class InfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Info  $info
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Info $info)
+    public function edit($id)
     {
         //
     }
@@ -64,21 +65,31 @@ class InfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Info  $info
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Info $info)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'description' => 'required',
+            ]);
+        $info = Info::findOrFail($id);
+        $info->description = $request->description;
+        $info->save();
+
+        return redirect(route('admin.info'))->with([
+                    'message_flash'=> sprintf('تم تعديل "%s" بنجاح !',$info->name),
+                    'alert' => 'alert-solid-success'
+                ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Info  $info
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Info $info)
+    public function destroy($id)
     {
         //
     }

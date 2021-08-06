@@ -25,14 +25,20 @@ class UserRequest extends FormRequest
     public function rules()
     {
         $valid = [
-            'name' => 'required|max:100',
-            'username' => 'required|max:20|min:4|alpha_dash|unique:users',
+            'name' => 'required|max:200',
+            'mobile' => 'required|string|min:10|max:14',
+            'birthday' => 'required|date',
+            'identity' => 'required|string',
+            'status'   => '',
+            'type'     => 'required|numeric|in:1,2,3',
+            'verify'   => '',
         ];
 
         if ($this->isMethod('post')) {
 
             $valid['password'] = 'required|string|min:8|confirmed';
             $valid['email'] = 'required|email|max:80';
+            $valid['username'] = 'required|max:20|min:2|alpha_dash|unique:users';
 
         }
 
@@ -40,6 +46,7 @@ class UserRequest extends FormRequest
 
             $id = Auth::user()->id;
             $valid['email'] = 'required|email|max:30' . $id . ',id,deleted_at,NULL';
+            $valid['username'] = 'required|max:20|min:2|alpha_dash';
         }
         
         return $valid;

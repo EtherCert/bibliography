@@ -18,8 +18,8 @@ class CreateSettingsTable extends Migration
             $table->string('siteName');
             $table->string('siteNameEng');// اسم الشركة بالانجليزي
             $table->string('manager');// رئيس مجلس الادارة
-            $table->string('subName1');
-            $table->string('subName2');
+            $table->string('subName1')->nullable();
+            $table->string('subName2')->nullable();
             $table->string('subName3')->nullable();
             $table->longText('accountNum')->nullable();
             $table->string('color')->default('style.css');
@@ -33,7 +33,7 @@ class CreateSettingsTable extends Migration
             $table->string('snapchat');
             $table->string('logo');
             $table->string('seal'); // ختم الشركة
-            $table->integer('NumOfStudies');//عدد الدراسات بالصفحة
+            $table->integer('num_of_elements');//عدد الدراسات بالصفحة
             $table->longText('privacy')->nullable();//الشروط والأحكام
             $table->timestamps();
         });
