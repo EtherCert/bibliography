@@ -79,11 +79,16 @@ Route::post('/users/change-password/admin', 'App\Http\Controllers\UserController
 Here Members
 |--------------------------------------------------------------------------
 */
-//Route::post('/users/my-update', 'App\Http\Controllers\UserController@myUpdate')->name('users.my-update');    
-//Route::post('/users/change-password', 'App\Http\Controllers\UserController@changePassword')->name('users.change-password'); 
 Route::get('/members', 'App\Http\Controllers\UserController@indexMembers')->name('members.index'); 
 Route::get('/members/details/{id}', 'App\Http\Controllers\UserController@detailsMember')->name('members.details'); 
-    
+
+/* 
+|--------------------------------------------------------------------------
+Here Members
+|--------------------------------------------------------------------------
+*/
+Route::get('/studies/{study_state}', 'App\Http\Controllers\StudyController@indexAdmin')->name('studies.index');
+Route::get('/study/details/{id}', 'App\Http\Controllers\StudyController@detailsAdmin')->name('study.details');     
 });
 
 /* 

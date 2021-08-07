@@ -27,6 +27,8 @@ class CreateStudiesTable extends Migration
             $table->string('department_name');//high level studies
             $table->string('publisher');
             $table->string('publish_place');
+            $table->string('publish_date')->nullable();
+            $table->string('keywords')->nullable();
             $table->integer('number_of_pages');
             $table->string('search_leave_file');// خاص بدراسات المراحل العليا (إجازة البحث من القسم العلمي)
             $table->boolean('accept_conditions')->default(0);

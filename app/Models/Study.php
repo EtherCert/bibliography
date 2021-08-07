@@ -11,11 +11,11 @@ class Study extends Model
     
     public function userAdmins()
     {
-    return $this->belongsTo('App\Mdels\User', 'admin_id');
+    return $this->belongsTo('App\Models\User', 'admin_id');
     }
     
     public function userMembers()
     {
-    return $this->belongsTo('App\Mdels\User', 'member_id');
+    return $this->belongsTo('App\Models\User', 'member_id');
     }
 }

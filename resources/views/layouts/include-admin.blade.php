@@ -157,6 +157,34 @@
                 <li id="" class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link ">
                   <i class="kt-menu__link-icon fa fa-money-check"></i><span class="kt-menu__link-text">الطلبات </span></a>
                 </li>
+                   <li id="studies" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                  <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                  <span class="kt-menu__link-icon fa fa-blog">
+                  </span>
+                  <span class="kt-menu__link-text">الدراسات</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                  </a>
+                  <div id="sub-studies" class="kt-menu__submenu ">
+                    <span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                      <li id="under_review" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.studies.index', ['study_state'=>'قيد المراجعة'])}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">قيد المراجعة</span></a>
+                      </li>
+                      <li id="published" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.studies.index', ['study_state'=>'منشورة'])}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">منشورة</span></a>
+                      </li>
+                    <li id="refused" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.studies.index', ['study_state'=>'مرفوضة'])}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">مرفوضة</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+                
                 <li id="users" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                   <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                   <span class="kt-menu__link-icon fa fa-users">
