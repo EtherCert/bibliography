@@ -147,7 +147,7 @@
                               </div>
                               <div id="holder" style="margin-top:15px;max-height:100px;"></div>
                            </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                               <label for="User_FirstName">الختم</label>
                               <div class="input-group">
                                  <span class="input-group-btn">

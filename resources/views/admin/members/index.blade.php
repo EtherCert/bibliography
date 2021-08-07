@@ -1,12 +1,12 @@
 @extends('../layouts.include-admin')
-@section('title', 'المستخدمون') 
+@section('title', 'المشتركون') 
 @section('content')
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
   <!-- begin:: Content Head -->
   <div class="kt-subheader  kt-grid__item" id="kt_subheader">
     <div class="kt-container  kt-container--fluid ">
       <div class="kt-subheader__main">
-        <h3 class="kt-subheader__title">المستخدمون</h3>
+        <h3 class="kt-subheader__title">المشتركون</h3>
         <span class="kt-subheader__separator kt-subheader__separator--v"></span>
         <span class="kt-subheader__desc">التفاصيل</span>
         <div class="kt-input-icon kt-input-icon--right kt-subheader__search kt-hidden">
@@ -32,7 +32,7 @@
         <div class="kt-portlet">
           <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
-              <h3 class="kt-portlet__head-title">المستخدمون</h3>
+              <h3 class="kt-portlet__head-title">المشتركون</h3>
             </div>
             <div class="kt-portlet__head-toolbar"></div>
           </div>
@@ -40,27 +40,23 @@
           <div class="kt-portlet__body">
             <div class="row">
               <div class="col-md-12">
-                <form action="{{ route('admin.users.index') }}" method="get" novalidate="novalidate">
+                <form action="{{ route('admin.members.index') }}" method="get" novalidate="novalidate">
                   <div class="row">
-                    <div class="col-md-3">
-                      <div class="form-group">
-                        <label for="Username">الحالة</label>
-                        <select name="status" class="form-control">
-                          <option value=""></option>
-                          <option {{ $status == 'مفعل'? ' selected' : '' }} value="مفعل">مفعل</option>
-                          <option {{ $status == 'غير مفعل'? ' selected' : '' }} value="غير مفعل">غير مفعل</option>
-                        </select>
-                      </div>
-                    </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label for="Username">الاسم</label>
                         <input value="{{$name}}" class="form-control m-input m-input--square" name="name" type="text" value="">
                       </div>
+                    </div> 
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="Username">الجوال</label>
+                        <input value="{{$mobile}}" class="form-control m-input m-input--square" name="mobile" type="text" value="">
+                      </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
-                        <label>البريد الإلكتروني</label>
+                        <label>الإيميل</label>
                         <input value="{{$email}}" class="form-control m-input m-input--square" id="Name" name="email" type="text" value="">
                       </div>
                     </div>
@@ -78,11 +74,11 @@
                         <th class="text-center" width="10%">#</th>
                         <th class="text-center">الاسم </th>
                         <th class="text-center">اسم المستخدم</th>
-                        <th class="text-center">البريد الإلكتروني</th>
+                        <th class="text-center">الإيميل</th>
                         <!-- <th class="text-center">تاريخ الميلاد</th>-->
                         <th class="text-center">الجوال</th>
                         <th class="text-center">رقم السجل المدني</th>
-                        <th class="text-center">الحالة</th>
+                        <!-- <th class="text-center">الحالة</th>-->
                         <th class="text-center" width="10%"></th>
                       </tr>
                     </thead>
@@ -114,9 +110,11 @@
                         <!-- <td class="text-center">{{$user->birthday}}</td>-->
                         <td class="text-center">{{$user->mobile}}</td>
                         <td class="text-center">{{$user->identity}}</td>
+                        <!--
                         <td class="text-center">
                           <span class="btn btn-bold btn-sm btn-font-sm {{$user->status == 'مفعل'? 'btn-label-success' :'btn-label-danger'}}">{{$user->status}}</span>
                         </td>
+                        -->
                         <td class="fitwidth">
                           <div class="kt-widget2__actions">
                             <a href="#" class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="false">
@@ -131,9 +129,9 @@
                                   </a>
                                 </li>
                                 <li class="kt-nav__item" style="float: center;">
-                                  <a href="{{ route('admin.users.details', ['id' => $user->id]) }}" class="kt-nav__link"> 
+                                  <a href="{{ route('admin.members.details', ['id' => $user->id]) }}" class="kt-nav__link"> 
                                   <i class="kt-nav__link-icon fa fa-eye"></i>
-                                  <span class="kt-nav__link-text">النفاصيل</span>
+                                  <span class="kt-nav__link-text">التفاصيل</span>
                                   </a>
                                 </li>
                                 <li class="kt-nav__item" style="float: center;">
@@ -146,7 +144,7 @@
                                   <form method="post" class="form-inline" action="{{ route('admin.users.destroy', ['user' => $user->id]) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button onclick="return confirm('هل أنت متأكد من حذف المستخدم ؟')" style="margin-right: 12px;" type="submit" class="btn btn-elevate btn-pill">
+                                    <button onclick="return confirm('هل أنت متأكد من حذف المشترك ؟')" style="margin-right: 12px;" type="submit" class="btn btn-elevate btn-pill">
                                     <i class="kt-nav__link-icon fa fa-trash"></i>
                                     <span class="kt-nav__link-text">حذف</span>
                                     </button>
@@ -183,6 +181,6 @@
 <script>
    document.getElementById("users").className += " kt-menu__item--active";
    document.getElementById("sub-users").className += " kt-menu__item  kt-menu__item--active";
-   document.getElementById("admins").className += " kt-menu__item  kt-menu__item--active";
-</script>           
+   document.getElementById("members").className += " kt-menu__item  kt-menu__item--active";
+</script>            
 @endsection

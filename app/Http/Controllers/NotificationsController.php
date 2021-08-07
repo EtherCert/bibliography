@@ -20,12 +20,18 @@ class NotificationsController extends Controller
         if(!$noti)
             abort(404);
       $noti->delete();
-        return back()->with('message_flash', sprintf('تم حذف الإشعار بنجاح!'));
+        return back()->with([
+                    'message_flash'=> sprintf('تم حذف الإشعار بنجاح!'),
+                    'alert' => 'alert-solid-success'
+                ]);
     }
 
 	public function deleteAll(){
     $user = Auth::user();
     $user->notifications()->delete();
-    return back()->with('message_flash', sprintf('تم حذف الإشعارات بنجاح!'));
+    return back()->with([
+                    'message_flash'=> sprintf('تم حذف الإشعارات بنجاح!'),
+                    'alert' => 'alert-solid-success'
+                ]);
 	}    
 }

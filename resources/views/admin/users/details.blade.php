@@ -128,6 +128,8 @@
   <!-- end:: Content -->
 </div>
 <script>
-  document.getElementById("users").className += " kt-menu__item--active";
-</script>            
+   document.getElementById("users").className += " kt-menu__item--active";
+   document.getElementById("sub-users").className += " kt-menu__item  kt-menu__item--active";
+   document.getElementById("admins").className += " kt-menu__item  kt-menu__item--active";
+</script>              
 @endsection

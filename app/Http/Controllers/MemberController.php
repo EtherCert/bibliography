@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\MemberRequest;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\Carbon;
 use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\General;
 use DB;
 
-class UserController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,40 +43,12 @@ class UserController extends Controller
                     ->when($email, function($query, $email) {
                         return $query->where('email',  'LIKE', '%'.$email . '%');
                     })->where('id', '!=', $auth_user->id)
-                      ->where('type', '!=', '0')
                       ->orderBy('id', 'desc')->paginate($this->settings->num_of_elements);
         
         	return view('admin.users.index', [
             'users' => $users,
             'name' => $name,
             'status' => $status,
-            'email' => $email,
-    	]);
-    }
-    
-    public function indexMembers()
-    {
-        $name = request()->query('name', '');
-        $email = request()->query('email', '');
-        $mobile = request()->query('mobile', '');
-        $auth_user = Auth::user();
-        
-         $users = User::
-         when($name, function($query, $name) {
-                        return $query->where('name', 'LIKE', '%' . $name . '%');
-                    })
-                    ->when($mobile, function($query, $mobile) {
-                        return $query->where('mobile', '=', $mobile);
-                    })
-                    ->when($email, function($query, $email) {
-                        return $query->where('email',  'LIKE', '%'.$email . '%');
-                    })->where('type', '=', '0')
-                      ->orderBy('id', 'desc')->paginate($this->settings->num_of_elements);
-        
-        	return view('admin.members.index', [
-            'users' => $users,
-            'name' => $name,
-            'mobile' => $mobile,
             'email' => $email,
     	]);
     }
@@ -87,7 +60,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        return view('site.member.home.register');
     }
 
     /**
@@ -96,36 +69,42 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(MemberRequest $request)
     {
         $user = new User();
         
-        $user->name = $request->name; 
+        $user->name = $request->f_name . ' ' . $request->s_name . ' ' . $request->t_name . ' ' . $request->fo_name . ' '; 
         $user->username = $request->username; 
         $user->mobile = $request->mobile;
         $user->email = $request->email;
+        $user->mobile = $request->mobile;
         $user->birthday = $request->birthday;
         $user->identity = $request->identity;
+        $user->degree = $request->degree;
+        $user->major = $request->major;
+        $user->workplace = $request->workplace;
+        $user->job_title = $request->job_title;
+        $user->country = $request->country;
+        $user->city = $request->city;
+        $user->type = 0;
         $user->password = bcrypt($request->password);
-        $user->type = $request->type;
    
-        if($request->has('status')){
-             $user->status = 'مفعل';
-        }else{
-             $user->status = 'غير مفعل';
-        }
-        if($request->has('verify')){
-            $now = Carbon::now();
-             $user->email_verified_at = $now;
-        } 
-        
         $user->save();
         
-        return redirect(route('admin.users.index'))->with(
-                [
-                    'message_flash'=> sprintf('تم إنشاء المستخدم  "%s" بنجاح!', $user->name),
-                    'alert' => 'alert-solid-success'
-                ]); 
+        $users =  User:: where('type', '!=', '0')->get();
+        
+        $msg  = 'تم إضافة مستخدم جديد '. $user->name . ' ' . 'بنجاح';
+        $icon = 'fas fa-user-plus kt-font-success';
+        $url  = route('admin.members.details', ['id' => $user->id]);
+        
+        foreach($users as $u)
+          {  
+            $u->notify(new General($msg, $icon, $url));
+          }
+        
+        alert()->success('تم إنشاء حساب جديد بنجاح، أهلًا بك', $this->settings->siteName);
+        
+        return redirect(route('login'));
     }
 
     /**
@@ -151,29 +130,6 @@ class UserController extends Controller
         return view('admin.users.details')->with([
             'user'        => $user,
         ]);
-    }  
-    public function detailsMember($id)
-    {
-        $user = User::findOrFail($id);
-        
-        $title_ar = request()->query('title_ar', '');
-        $study_state = request()->query('study_state', '');
-        
-        $studies = $user->memberStudies()
-                   ->when($title_ar, function($query, $title_ar) {
-                        return $query->where('title_ar', 'LIKE', '%' . $title_ar . '%');
-                    })
-                    ->when($study_state, function($query, $study_state) {
-                        return $query->where('study_state', '=', $study_state);
-                    })->orderBy('id', 'desc')->paginate($this->settings->num_of_elements);
-
-
-        return view('admin.members.details')->with([
-            'user'        => $user,
-            'studies'     => $studies,
-            'title_ar'    => $title_ar,
-            'study_state' => $study_state,
-            ]);
     }
 
     public function myUpdate(Request $request){
@@ -273,17 +229,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         
         $user->delete();
-        
-        if($user->type == 0)
-         
-    	return redirect(route('admin.members.index'))
-            ->with(
-                [
-                    'message_flash'=> sprintf('تم حذف المشترك  "%s" بنجاح!', $user->name),
-                    'alert' => 'alert-solid-success'
-                ]);
-        
-        return redirect(route('admin.users.index'))
+
+    	return redirect(route('admin.users.index'))
             ->with(
                 [
                     'message_flash'=> sprintf('تم حذف المستخدم  "%s" بنجاح!', $user->name),
@@ -321,24 +268,6 @@ class UserController extends Controller
         $user->save();
        
         alert()->success('تم التغيير كلمة المرور بنجاح');
-        
-        return redirect()->back()->with('message_flash');
-    }
-     public function changePasswordByAdmin(Request $request){
-
-       $request->validate([
-           'password'              => 'min:8|required|same:password',
-           'password_confirmation' => 'required|same:password',
-           'member_id'               => 'required|integer',
-        ]);
-
-        //Change Password
-        $user = User::findOrFail($request->member_id);
-        $user->password = bcrypt($request->password);
-        $user->save();
-       $siteName = Setting::select('siteName')->where('id','=','1')->get()->first()->siteName;
-       
-        alert()->success('تم تغيير كلمة المرور بنجاح', $siteName);
         
         return redirect()->back()->with('message_flash');
     }

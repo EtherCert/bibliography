@@ -12,17 +12,21 @@ class General extends Notification
 {
     use Queueable;
     protected $notification_message;
+    protected $icon;
+    protected $url;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($notification_message)
+    public function __construct($notification_message, $icon, $url)
     {
         //نرسل هنا شو اللي صار مثلا سجل مستخدم جديد لذلك انا بدي امرر لكنستراكتور باراميتر لنبين شو اليوزر اللي ت انشاؤه مثلا
         //شو في باراميتر بدنا نرسلها للاشعارات نرسلها من خلال الباراميتر
         $this->notification_message = $notification_message;
+        $this->icon = $icon;
+        $this->url = $url;
     }
 
     /**
@@ -68,9 +72,9 @@ class General extends Notification
         //$notifiable   يعني مين حيستقبل الرسالة لمين ارسل الاشعار معناها
 
         return [
-            'icon' => 'fas fa-user-plus',
-            'message' =>$this->notification_message,
-            'url' => route('admin.notifications'),
+            'icon'    => $this->icon,
+            'message' => $this->notification_message,
+            'url'     => $this->url,
         ];
     }    
     
@@ -78,9 +82,9 @@ class General extends Notification
     {
       
         return [
-            'icon' => '',
+            'icon'    => $this->icon,
             'message' =>$this->notification_message,
-            'url' => route('admin.notifications'),
+            'url'     => $this->url,
         ];
     }
 }

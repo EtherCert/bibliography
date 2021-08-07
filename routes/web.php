@@ -21,9 +21,9 @@ Notifications
 */
 Route::prefix('admin/')->name('admin.')->group(function () {
  
-Route::get('notifications','NotificationsController@index')->name('notifications');
-Route::delete('notifications/{id}','NotificationsController@delete')->name('notifications-delete');
-Route::delete('notifications-add/','NotificationsController@deleteAll')->name('notifications-delete-all');
+Route::get('notifications','App\Http\Controllers\NotificationsController@index')->name('notifications');
+Route::delete('notifications/{id}','App\Http\Controllers\NotificationsController@delete')->name('notifications.delete');
+Route::delete('notifications-add/','App\Http\Controllers\NotificationsController@deleteAll')->name('notifications-delete-all');
     
 /*
 |--------------------------------------------------------------------------
@@ -72,15 +72,35 @@ Route::resource('users', 'App\Http\Controllers\UserController');
 Route::post('/users/my-update', 'App\Http\Controllers\UserController@myUpdate')->name('users.my-update');    
 Route::post('/users/change-password', 'App\Http\Controllers\UserController@changePassword')->name('users.change-password'); 
 Route::get('/users/details/{id}', 'App\Http\Controllers\UserController@details')->name('users.details'); 
+Route::post('/users/change-password/admin', 'App\Http\Controllers\UserController@changePasswordByAdmin')->name('users.change-password.admin');    
+    
+/* 
+|--------------------------------------------------------------------------
+Here Members
+|--------------------------------------------------------------------------
+*/
+//Route::post('/users/my-update', 'App\Http\Controllers\UserController@myUpdate')->name('users.my-update');    
+//Route::post('/users/change-password', 'App\Http\Controllers\UserController@changePassword')->name('users.change-password'); 
+Route::get('/members', 'App\Http\Controllers\UserController@indexMembers')->name('members.index'); 
+Route::get('/members/details/{id}', 'App\Http\Controllers\UserController@detailsMember')->name('members.details'); 
     
 });
 
-Route::get('/', function () { return view('site.index');})->name('index');
-
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
+/* 
+|--------------------------------------------------------------------------
+Here Laravel Route 
+|--------------------------------------------------------------------------
+*/ 
 Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم مهم
+Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم مهم
+/* 
+|--------------------------------------------------------------------------
+Here Home Page
+|--------------------------------------------------------------------------
+*/ 
+Route::get('/', function () { return view('site.index');})->name('index');
+//Route::get('/', 'MembershipController@indexPublic')->name('index');
+//Route::post('/email-list', 'EmailListController@store')->name('email-list');
+//Route::get('/details/{id}', 'MembershipController@show')->name('membeships-details');
+//Route::get('/all', 'MembershipController@allMemberships')->name('all');

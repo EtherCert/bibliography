@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{asset('site-assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('site-assets/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('site-assets/css/rtl.css')}}">
+    <link href="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" />  
     <title>@yield('title')</title>
     <link rel="icon" type="image/ico" href="{{asset('site-assets/img/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/earlyaccess/droidarabickufi.css" rel="stylesheet">
@@ -71,9 +72,22 @@
             </div>
           </nav>
         </div>
+           @if(count($errors)>0)
+          <div class="alert alert-danger fade show" role="alert">
+            <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+            <div class="alert-text">
+              @foreach ($errors->all() as $error)
+              <li>
+                {{$error}}
+              </li>
+              @endforeach
+            </div>
+          </div>
+          @endif
       </div>
     </div>
 	@yield('content')
+    @include('sweetalert::alert')  
  <footer class="pt-100">
       <div class="container">
         <div class="row">
@@ -184,5 +198,7 @@
     <script src="{{asset('site-assets/js/jquery.nice-select.min.js')}}"></script>
     <script src="{{asset('site-assets/js/thumb-slide.js')}}"></script>
     <script src="{{asset('site-assets/js/custom.js')}}"></script>
+    <script src="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script> 
+    <script src="{{asset('assets/vendors/custom/js/vendors/sweetalert2.init.js')}}" type="text/javascript"></script>  
   </body>
 </html>

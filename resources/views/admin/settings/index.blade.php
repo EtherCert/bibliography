@@ -203,7 +203,6 @@
                                     </p>
                                 </div>
                             </div>
-
                             <!--end::Widget 12-->
                         </div>
                     </div>

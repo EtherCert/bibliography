@@ -71,7 +71,6 @@
     <link href="{{asset('assets/vendors/general/toastr/build/toastr.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/vendors/general/morris.js/morris.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/vendors/general/socicon/css/socicon.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/vendors/custom/vendors/line-awesome/css/line-awesome.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/vendors/custom/vendors/flaticon/flaticon.css')}}" rel="stylesheet" type="text/css" />
@@ -158,32 +157,51 @@
                 <li id="" class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link ">
                   <i class="kt-menu__link-icon fa fa-money-check"></i><span class="kt-menu__link-text">الطلبات </span></a>
                 </li>
-                <li id="users" class="kt-menu__item " aria-haspopup="true"><a href="{{route('admin.users.index')}}" class="kt-menu__link ">
-                  <i class="kt-menu__link-icon fa fa-users"></i><span class="kt-menu__link-text">المستخدمون </span></a>
+                <li id="users" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                  <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                  <span class="kt-menu__link-icon fa fa-users">
+                  </span>
+                  <span class="kt-menu__link-text">المستخدمون</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                  </a>
+                  <div id="sub-users" class="kt-menu__submenu ">
+                    <span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                      <li id="admins" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.users.index')}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">المسؤولون</span></a>
+                      </li>
+                      <li id="members" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.members.index')}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">المشتركون</span></a>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
-                   <li id="manage" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                           <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
-                              <span class="kt-menu__link-icon fa fa-cogs">
-                              </span>
-                              <span class="kt-menu__link-text">إدارة النظام</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
-                           </a>
-                           <div id="sub-manager" class="kt-menu__submenu ">
-                              <span class="kt-menu__arrow"></span>
-                              <ul class="kt-menu__subnav">
-                                 <li id="settings" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                 <a href="{{route('admin.settings.index')}}" class="kt-menu__link kt-menu__toggle">
-                                 <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
-                                 <span class="kt-menu__link-text">الإعدادات</span></a>
-                                 </li> 
-                                 <li id="infos" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
-                                 <a href="{{route('admin.info')}}" class="kt-menu__link kt-menu__toggle">
-                                 <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
-                                 <span class="kt-menu__link-text">عن المركز</span></a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </li>
-             </ul>
+                <li id="manage" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                  <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
+                  <span class="kt-menu__link-icon fa fa-cogs">
+                  </span>
+                  <span class="kt-menu__link-text">إدارة النظام</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                  </a>
+                  <div id="sub-manager" class="kt-menu__submenu ">
+                    <span class="kt-menu__arrow"></span>
+                    <ul class="kt-menu__subnav">
+                      <li id="settings" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.settings.index')}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">الإعدادات</span></a>
+                      </li>
+                      <li id="infos" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                        <a href="{{route('admin.info')}}" class="kt-menu__link kt-menu__toggle">
+                        <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
+                        <span class="kt-menu__link-text">عن المركز</span></a>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
           <!-- end:: Aside Menu -->
@@ -198,7 +216,6 @@
               <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
                 <ul class="kt-menu__nav ">
                   <li class="kt-menu__item  kt-menu__item--submenu kt-menu__item--rel kt-menu__item--active" data-ktmenu-submenu-toggle="click" aria-haspopup="true">
-                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle btn btn-label-instagram"><span class="kt-menu__link-text"><i class="fa fa-plus"></i>إنشـــــاء</span><i class="kt-menu__ver-arrow la la-angle-right"></i></a>
                     <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                       <ul class="kt-menu__subnav">
                         <li class="kt-menu__item " aria-haspopup="true"><a href="demo1/index.html" class="kt-menu__link "><span class="kt-menu__link-icon">
@@ -283,18 +300,20 @@
                           @if(count($notifications) == 0)
                           <li class="kt-notification__item">لا جديد حتى اللحظة</li>
                           @else
-                          @foreach($notifications as $notification)
-                          <a  onclick="pop(this)"
-                            the_id='{{$notification->id}}' style="font-size: 85%;" href="{{$notification->data['action']['link']}}" class="kt-notification__item">
-                            <div class="kt-notification__item-details">
-                              <div class="kt-notification__item-title {{$notification->read_at?'':'class=text-bold from menu-title'}}">
-                                {!! \Illuminate\Support\Str::limit($notification->data['action']['title'], 35)!!}
+                         @foreach($notifications as $notification)
+                           <a href="{{$notification->data['url']}}" class="kt-notification__item">
+                              <div class="kt-notification__item-icon">
+                                 <i class="{{$notification->data['icon']}}"></i>
                               </div>
-                              <div class="kt-notification__item-time">
-                                {{$notification->created_at->diffForHumans()}}
+                              <div class="kt-notification__item-details">
+                                 <div style="font-size: 90%;" class="kt-notification__item-title {{$notification->read_at?'':'class=text-bold from menu-title'}}">
+                                    {{ \Illuminate\Support\Str::limit($notification->data['message'], 35)}}
+                                 </div>
+                                 <div style="font-size: 75% !important;" class="kt-notification__item-time">
+                                   {{$notification->created_at->diffForHumans()}}
+                                 </div>
                               </div>
-                            </div>
-                          </a>
+                           </a>
                           @endforeach
                           @endif
                         </div>
@@ -333,6 +352,7 @@
           </div>
           <!-- end:: Header -->
           @if(count($errors)>0)
+          <br>
           <div class="alert alert-danger fade show" role="alert">
             <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
             <div class="alert-text">
@@ -450,7 +470,6 @@
     <script src="{{asset('assets/vendors/general/counterup/jquery.counterup.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/vendors/general/es6-promise-polyfill/promise.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.min.js')}}" type="text/javascript"></script>  
-    <script src="{{asset('assets/vendors/custom/js/vendors/sweetalert2.init.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/vendors/custom/js/vendors/sweetalert2.init.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/vendors/general/jquery.repeater/src/lib.js')}}" type="text/javascript"></script>
     <script src="{{asset('assets/vendors/general/jquery.repeater/src/jquery.input.js')}}" type="text/javascript"></script>

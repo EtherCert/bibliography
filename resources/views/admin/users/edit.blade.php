@@ -136,10 +136,65 @@
         <!--end::Portlet-->
       </div>
     </div>
+        <div class="row">
+      <div class="col-md-12">
+        <!--begin::Portlet-->
+        <div class="kt-portlet">
+          <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+              <h3 class="kt-portlet__head-title">تغيير كلمة المرور</h3>
+            </div>
+            <div class="kt-portlet__head-toolbar">
+            </div>
+          </div>
+          <!--begin::Form-->
+          <div class="kt-portlet__body">
+            <div class="">
+              <form action="{{ route('admin.users.change-password.admin') }}" method="post">
+                @csrf   
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label>كلمة المرور الجديدة</label>
+                    <input minLength="8" required class="form-control m-input m-input--square @error('password') is-invalid @enderror" type="password" name="password">
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                  <input type="hidden" class="form-control" value="{{$user->id}}" name="member_id">    
+                  <div class="form-group col-md-6">
+                    <label>تأكيد كلمة المرور</label>
+                    <input minLength="8" required class="form-control m-input m-input--square @error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation">
+                    @error('password_confirmation')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group">
+                  <button class="btn btn-danger" type="submit">
+                  <i class="fa fa-save"></i>&nbsp;حفظ
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="kt-portlet__foot">
+          </div>
+          <!--end::Form-->
+        </div>
+        <!--end::Portlet-->
+      </div>
+    </div>
   </div>
   <!-- end:: Content -->
 </div>
 <script>
-  document.getElementById("users").className += " kt-menu__item--active";
-</script>            
+   document.getElementById("users").className += " kt-menu__item--active";
+   document.getElementById("sub-users").className += " kt-menu__item  kt-menu__item--active";
+   document.getElementById("admins").className += " kt-menu__item  kt-menu__item--active";
+</script>           
 @endsection
