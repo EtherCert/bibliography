@@ -1,3 +1,4 @@
+<?php $settings = App\Models\Setting::findOrFail(1);?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
@@ -140,37 +141,37 @@
                 <h3>معلومات التواصل</h3>
                 <ul>
                   <li>
-                    <span>العنوان: المملكة العربية السعودية- الرياض - طريق انس بن مالك ، حي النرجس</span>
+                    <span>{{$settings->address}}</span>
                   </li>
                   <li>
                     <span>الإيميل:</span>
-                    <a href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#4e272028210e22273627602d2123" target="_blank"><span class="__cf_email__" data-cfemail="1970777f765975706170377a7674">social@gmail.com</span></a>
+                   <span class="__cf_email__" data-cfemail="1970777f765975706170377a7674">{{$settings->email}}</span>
                   </li>
                   <li>
                     <span>رقم الجوال:</span>
-                    <a href="tel:+0123456789" target="_blank">+0123 456 789</a>
+                    <a href="tel:+0123456789" target="_blank">{{$settings->whatsapp}}</a>
                   </li>
                 </ul>
               </div>
               <div class="footer-social">
                 <ul>
                   <li>
-                    <a href="#" target="_blank">
+                    <a href="{{$settings->facebook}}" target="_blank">
                     <i class='bx bxl-facebook'></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#" target="_blank">
+                    <a href="{{$settings->twitter}}" target="_blank">
                     <i class='bx bxl-twitter'></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#" target="_blank">
-                    <i class='bx bxl-linkedin'></i>
+                    <a href="{{$settings->snapchat}}" target="_blank">
+                    <i class='bx bxl-snapchat'></i>
                     </a>
                   </li>
                   <li>
-                    <a href="#" target="_blank">
+                    <a href="{{$settings->instagram}}" target="_blank">
                     <i class='bx bxl-instagram'></i>
                     </a>
                   </li>
@@ -180,7 +181,7 @@
           </div>
         </div>
         <div class="copyright-area">
-          <p>جميع الحقوق محفوظة © <a href="https://hibootstrap.com/" target="_blank">جمعية الأخصائيين الإجتماعيين</a></p>
+          <p>جميع الحقوق محفوظة © <a href="https://socialworkers.org.sas" target="_blank">{{$settings->siteName}}</a></p>
         </div>
       </div>
     </footer>

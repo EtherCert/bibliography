@@ -96,7 +96,17 @@ Route::get('/download-study/{id}', 'App\Http\Controllers\StudyController@downloa
 Route::get('/download-search-leave/{id}', 'App\Http\Controllers\StudyController@downloadSearchLeave_File')->name('study.download-study-leave');     
 Route::post('/change-status-or-transferer/{id}', 'App\Http\Controllers\StudyController@changeStatusOrTransfere')->name('change-status-or-transfere');
 Route::get('/studies/excel/scientific/{study_state}', 'App\Http\Controllers\ExportExcelController@exportScientificStudy')->name('studies.excel.scientific');    
-Route::get('/studies/excel/state/{study_state}', 'App\Http\Controllers\ExportExcelController@exportStateStudyExport')->name('studies.excel.state');    
+Route::get('/studies/excel/state/{study_state}', 'App\Http\Controllers\ExportExcelController@exportStateStudyExport')->name('studies.excel.state');  
+
+/* 
+|--------------------------------------------------------------------------
+Here Contacts
+|--------------------------------------------------------------------------
+*/
+Route::resource('contacts', 'App\Http\Controllers\ContactController')->only(['index','destroy']); 
+Route::get('/contacts/mark-read/{id}', 'App\Http\Controllers\ContactController@markRead')->name('contacts.mark-read');  
+Route::get('/contacts/delete-all', 'App\Http\Controllers\ContactController@deleteAll')->name('contacts.delete.all');  
+    
 });
 
 /* 
@@ -107,13 +117,23 @@ Here Laravel Route
 Auth::routes();
 Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم مهم
 Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم مهم
+
+////////////////////////////// Here Public //////////////////////////////
 /* 
 |--------------------------------------------------------------------------
 Here Home Page
 |--------------------------------------------------------------------------
 */ 
-Route::get('/', function () { return view('site.index');})->name('index');
-//Route::get('/', 'MembershipController@indexPublic')->name('index');
-//Route::post('/email-list', 'EmailListController@store')->name('email-list');
-//Route::get('/details/{id}', 'MembershipController@show')->name('membeships-details');
-//Route::get('/all', 'MembershipController@allMemberships')->name('all');
+Route::get('/', 'App\Http\Controllers\HomeController@publicHome')->name('index');
+/* 
+|--------------------------------------------------------------------------
+Here Contacts
+|--------------------------------------------------------------------------
+*/
+Route::post('contacts/store', 'App\Http\Controllers\ContactController@store')->name('contacts.store');
+/* 
+|--------------------------------------------------------------------------
+Here Studies
+|--------------------------------------------------------------------------
+*/
+Route::get('/study/{id}', 'App\Http\Controllers\StudyController@detailsPublic')->name('study.details');     

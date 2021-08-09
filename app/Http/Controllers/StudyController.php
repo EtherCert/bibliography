@@ -139,7 +139,17 @@ class StudyController extends Controller
          ]);
          return view('admin.home.no-access');
          
-    } 
+    }   
+     public function detailsPublic($id)
+     {
+        $study = Study::findOrFail($id);
+          
+         if($study->study_state == 'منشورة')
+            return view('site.studies.details')->with([
+            'study'  => $study,
+         ]);
+         return abort(404);
+     } 
     
     public function downloadSummaryAr($id){
     $study = Study::select('summary_ar_file')->findOrFail($id);

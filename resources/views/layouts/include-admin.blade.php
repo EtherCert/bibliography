@@ -151,10 +151,7 @@
                 <li id="home" class="kt-menu__item " aria-haspopup="true"><a href="{{route('admin.dashboard')}}" class="kt-menu__link ">
                   <i class="kt-menu__link-icon fa fa-tachometer-alt"></i><span class="kt-menu__link-text">الرئيسة </span></a>
                 </li>
-                <li id="" class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link ">
-                  <i class="kt-menu__link-icon fa fa-money-check"></i><span class="kt-menu__link-text">الطلبات </span></a>
-                </li>
-                   <li id="studies" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                <li id="studies" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                   <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                   <span class="kt-menu__link-icon fa fa-blog">
                   </span>
@@ -226,7 +223,10 @@
                     </ul>
                   </div>
                 </li>
-              </ul>
+                <li id="messages" class="kt-menu__item " aria-haspopup="true"><a href="{{route('admin.contacts.index')}}" class="kt-menu__link ">
+                  <i class="kt-menu__link-icon fa fa-envelope"></i><span class="kt-menu__link-text">رسائل الزوار</span></a>
+                </li>
+             </ul>
             </div>
           </div>
           <!-- end:: Aside Menu -->
@@ -547,9 +547,11 @@
       };
        tinymce.init(editor_config);
     </script>
+<!--
     <script>
       {!! \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')) !!}
     </script>
+-->
     <script>
       $('#lfm').filemanager('image', {prefix: route_prefix});
       //    $('#lfm').filemanager('file', {prefix: route_prefix});

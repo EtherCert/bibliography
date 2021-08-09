@@ -16,9 +16,9 @@
         <div class="d-table-cell">
           <div class="container">
             <div class="banner-text">
-              <h1 style="font-size: 40px;">جمعية <span>الأخصائيين</span> الإجتماعيين</h1>
+              <h1 style="font-size: 40px;"><span>{{$settings->siteName}}</span></h1>
               <br>
-              <p style="text-align: justify;">مرحبا بك عزيزي الزائر .. جمعية الأخصائيين الاجتماعيين (ASW) تأسست في عام 2018 برقم (1065) من وزارة الموارد البشرية والتنمية الاجتماعية، وهي جمعية مهنية تضم في عضويتها الأخصائيين الاجتماعيين المحترفين في المملكة العربية السعودية ، وتعمل (ASW) على تعزيز النمو المهني وتطوير أعضائها المنضمين لعضويتها، وذلك من أجل الحفاظ على المعايير المهنية وتعزيز السياسات الاجتماعية السليمة. ويسرنا أن تكون أحد أعضائها من خلال اختيار أحد عضويات الجمعية التي تتناسب مع مؤهلاتك لتسهم في مسيرة نجاحها.</p>
+              <p style="text-align: justify;">{!!$infos[0]->description!!}</p>
             </div>
           </div>
         </div>
@@ -31,33 +31,33 @@
             <div class="col-6 col-sm-6 col-lg-3">
               <div class="counter-item" >
                 <h3 class="my-color">
-                  <span class="odometer" data-count="15">00</span>
+                  <span class="odometer" data-count="{{strrev($p_sc_studies_counter.'')}}">00</span>
                 </h3>
-                <p class="my-color">المستخدمون</p>
+                <p class="my-color">الدرسات العلمية</p>
               </div>
             </div>
             <div class="col-6 col-sm-6 col-lg-3">
               <div class="counter-item">
                 <h3 class="my-color">
-                  <span class="odometer" data-count="156">00</span>
+                  <span class="odometer" data-count="{{strrev($p_st_studies_counter.'')}}">00</span>
                 </h3>
-                <p class="my-color">المنشورات</p>
+                <p class="my-color">دراسات في مرحلة الدراسات العليا</p>
               </div>
             </div>
             <div class="col-6 col-sm-6 col-lg-3">
               <div class="counter-item">
                 <h3 class="my-color">
-                  <span class="odometer" data-count="756">00</span>
+                  <span class="odometer" data-count="{{strrev($studies_counter.'')}}">00</span>
                 </h3>
-                <p class="my-color">الناشرون</p>
+                <p class="my-color">إجمالي الدراسات المنشورة</p>
               </div>
             </div>
             <div class="col-6 col-sm-6 col-lg-3">
               <div class="counter-item">
                 <h3 class="my-color">
-                  <span class="odometer" data-count="22">00</span>
+                  <span class="odometer" data-count="{{strrev($members_counter.'')}}">00</span>
                 </h3>
-                <p class="my-color">المسؤولون</p>
+                <p class="my-color">عدد المشاركون</p>
               </div>
             </div>
           </div>
@@ -70,88 +70,46 @@
           <h2>آخر الدراسات</h2>
         </div>
         <div class="row">
+         @if(count($studies) == 0)
+          <div class="alert alert-info fade show" role="alert">
+            <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+            <div class="alert-text" style="text-align: justify;">
+                  لا يوجد دراسات لعرضها
+            </div>
+          </div>
+          @endif
+            
+          @foreach($studies as $study)
           <div class="col-sm-6 col-lg-4">
             <div class="service-item two">
               <div class="service-top">
                 <img src="{{asset('site-assets/img/home-three/service3.png')}}" alt="Service">
-                <img src="{{asset('site-assets/img/home-three/service4.png')}}" alt="Service">
+                <img src="{{asset('storage/'.$study->main_img)}}" alt="Service">
               </div>
               <div class="details-item">
                 <div class="details-img" style="margin-top: -30px;">
                   <ul>
-                    <li style="float: right; text-align: right;">
+                    <li style="float: right; text-align: right; font-size: 70% !important;">
                       <i class="bx bx-user"></i>
-                      By: <a href="#">admin</a>
+                      {{$study->researcher_name}}
                     </li>
-                    <li style="float: left; text-align: left;">
+                    <li style="float: left; text-align: left; font-size: 70% !important;">
                       <i class="bx bx-calendar-alt"></i>
-                      20 7, 2020
+                      {{explode(' ', $study->created_at)[0]}}
                     </li>
                   </ul>
                 </div>
               </div>
+                <br>
               <h3>
-                <a style="text-align: right; float: right; margin-top: 10px;" href="#">دراسة 2</a>
+                <a style="text-align: right; float: right; margin-top: 10px;" href="{{route('study.details', ['id' => $study->id])}}">{{$study->title_ar}}</a>
               </h3>
-              <br><br><br>
-              <p style="text-align: right;">دراسة 2 تفاصيل</p>
+              <br><br>
+              <p style="text-align: right;">{{ \Illuminate\Support\Str::limit($study->summary_ar, 45)}}</p>
             </div>
           </div>
-          <div class="col-sm-6 col-lg-4">
-            <div class="service-item two">
-              <div class="service-top">
-                <img src="{{asset('site-assets/img/home-three/service3.png')}}" alt="Service">
-                <img src="{{asset('site-assets/img/home-three/service4.png')}}" alt="Service">
-              </div>
-              <div class="details-item">
-                <div class="details-img" style="margin-top: -30px;">
-                  <ul>
-                    <li style="float: right; text-align: right;">
-                      <i class="bx bx-user"></i>
-                      By: <a href="#">admin</a>
-                    </li>
-                    <li style="float: left; text-align: left;">
-                      <i class="bx bx-calendar-alt"></i>
-                      20 7, 2020
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <h3>
-                <a style="text-align: right; float: right; margin-top: 10px;" href="#">دراسة 2</a>
-              </h3>
-              <br><br><br>
-              <p style="text-align: right;">دراسة 2 تفاصيل</p>
-            </div>
-          </div>
-          <div class="col-sm-6 col-lg-4">
-            <div class="service-item three">
-              <div class="service-top">
-                <img src="{{asset('site-assets/img/home-three/service5.png')}}" alt="Service">
-                <img src="{{asset('site-assets/img/home-three/service6.png')}}" alt="Service">
-              </div>
-              <div class="details-item">
-                <div class="details-img" style="margin-top: -30px;">
-                  <ul>
-                    <li style="float: right; text-align: right;">
-                      <i class="bx bx-user"></i>
-                      By: <a href="#">admin</a>
-                    </li>
-                    <li style="float: left; text-align: left;">
-                      <i class="bx bx-calendar-alt"></i>
-                      20 7, 2020
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <h3>
-                <a style="text-align: right; float: right; margin-top: 10px;" href="#">دراسة 2</a>
-              </h3>
-              <br><br><br>
-              <p style="text-align: right;">دراسة 2 تفاصيل</p>
-            </div>
-          </div>
-        </div>
+          @endforeach
+       </div>
       </div>
     </section>
     <section id="about" class="faq-area ptb-100">
@@ -163,27 +121,13 @@
           <div class="col-lg-6">
             <div class="faq-content">
               <ul class="accordion">
+                @foreach($infos as $info)  
                 <li>
-                  <a>هل يمكن للعضو استرجاع مبلغ العضوية بعد السداد؟</a>
-                  <p>اللائحة الأساسية في الفصل الثاني المادة الرابعة عشر الفقرة (3) تنص ” لا يجوز للعضو أو من زالت عضويته ولا لورثته المطالبة باسترداد أي مبلغ دفعه العضو للجمعية سواء كان اشتراكا أو هبة أو تبرعا أو غيرها”، عليه فلا يمكن للعضو استرجاع أي مبالغ مدفوعة.</p>
+                  <a>{{$info->name}}</a>
+                  <p style="text-align: justify;">{!!$info->description!!}</p>
                 </li>
-                <li>
-                  <a>هل يتطلب من العضو المشترك الحضور للجمعية؟</a>
-                  <p>غير مطلوب حضور أي عضو للجمعية إلا إن رغب في التعرف على مكان الجمعية والاطلاع على الخدمات المقدمة.</p>
-                </li>
-                <li>
-                  <a>هل الجمعية تتبع للهيئة السعودية للتخصصات الصحية؟</a>
-                  <p>لا، الجمعية تحت مظلة وزارة الموارد البشرية والتنمية الاجتماعية ومعتمدة برقم 1065.</p>
-                </li>
-                <li>
-                  <a>ماذا أستفيد من البطاقة التعريفية؟</a>
-                  <p>البطاقة هي تعريف وإثبات بأنك عضو في الجمعية.</p>
-                </li>
-                <li>
-                  <a>أنا خريج حديث وأرغب في عضوية الطالب.</a>
-                  <p>عضوية الطالب مخصصة لمن هم على مقاعد الدراسة حالياً، ومن شروط قبول انضمامهم إرفاق مشهد حديث.</p>
-                </li>
-              </ul>
+                @endforeach 
+               </ul>
             </div>
           </div>
           <div class="col-lg-6">
@@ -205,14 +149,42 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-6">
-              <form class="newsletter-form" data-toggle="validator">
-                <input type="text" class="form-control" placeholder="الاسم" name="name" required>
+              <form action="{{route('contacts.store')}}" class="newsletter-form" method="post">
+                  @csrf
+                <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="الاسم" name="name" required value="{{old('name')}}">
+                @error('name')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                 <br>
-                <input type="email" class="form-control" placeholder="البريد الإلكتروني" name="email" required autocomplete="on">
+                <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="البريد الإلكتروني" name="email" required autocomplete="on" value="{{old('email')}}">
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                 <br>
-                <input type="text" class="form-control" placeholder="الموضوع" name="subject" required>
+                <input type="text" minlength="10" maxlength="14" class="form-control @error('mobile') is-invalid @enderror" placeholder="رقم الجوال" name="mobile" required autocomplete="on" value="{{old('mobile')}}">
+                 @error('mobile')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+                @enderror
                 <br>
-                <textarea style="height: 150px;" class="form-control" placeholder="الرسالة" name="details" rows="20" required></textarea>
+                <input type="text" class="form-control @error('subject') is-invalid @enderror" placeholder="الموضوع" name="subject" required value="{{old('subject')}}">
+                @error('subject')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+                <br>
+                <textarea style="height: 150px;" class="form-control @error('details') is-invalid @enderror" placeholder="الرسالة" name="details" rows="20" required>{{old('details')}}</textarea>
+                @error('details')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+                @enderror  
                 <br>
                 <button style="position: relative; text-align: center;" class="btn cmn-btn" type="submit">
                 إرسال
@@ -228,5 +200,4 @@
         </div>
       </div>
     </div>
-    
 @endsection

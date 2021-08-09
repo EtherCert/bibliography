@@ -6,13 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
-use App\User;
 use Auth;
+use App\Models\User;
 use App\Models\Study;
+use App\Models\Setting;
+use App\Models\Info;
 use Illuminate\Database\Eloquent\Builder;
 
 class HomeController extends Controller
 {
+   private $settings;
+    
+   public function __construct()
+    {
+        $this->settings = Setting::findOrFail(1);
+    } 
+    
    public function noAccess(){
      return view('admin.home.no-access');
    }   
@@ -103,4 +112,23 @@ class HomeController extends Controller
                     'alert' => 'alert-solid-success'
                 ]);
 }
+    public function publicHome(){
+      $studies = Study::orderBy('id', 'desc')->where('study_state' , '=' , 'منشورة')->take(3)->get(); 
+      $infos = Info::all();
+      $p_sc_studies_counter = count(Study::select('id')->where('study_type', '=' , 'دراسة علمية')->where('study_state' , '=' , 'منشورة')->get());
+      $p_st_studies_counter = count(Study::select('id')->where('study_type', '=' , 'دراسة في مرحلة دراسات عليا')->where('study_state' , '=' , 'منشورة')->get());
+      $studies_counter = count(Study::select('id')->where('study_state' , '=' , 'منشورة')->get());
+        
+      $members_counter = count(User::select('id')->where('type', '=' , '0')->get());    
+        
+      return view('site.index')->with([
+          'settings'              => $this->settings,
+          'studies'               => $studies,
+          'infos'                 => $infos,
+          'p_sc_studies_counter'  => $p_sc_studies_counter,
+          'p_st_studies_counter'  => $p_st_studies_counter,
+          'studies_counter'       => $studies_counter,
+          'members_counter'       => $members_counter,
+      ]);  
+    }
 }

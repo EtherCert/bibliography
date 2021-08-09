@@ -25,6 +25,7 @@ class CreateStudiesTable extends Migration
             $table->longText('summary_en');
             $table->string('study_file');
             $table->string('summary_ar_file');
+            $table->string('main_img');
             $table->string('summary_en_file');
             $table->string('department_name');//high level studies
             $table->string('publisher');
