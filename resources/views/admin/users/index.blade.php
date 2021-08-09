@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="kt-portlet__head-toolbar" style="margin-top: 7px;">
-        <a href="{{ route('admin.users.create') }}" class="popupFormBtn btn btn-success">
+        <a href="{{ route('admin.users.create') }}" class="popupFormBtn btn btn-info">
         <i class="la la-plus"></i>&nbsp;إضافة مستخدم
         </a>
       </div>
@@ -33,8 +33,13 @@
           <div class="kt-portlet__head">
             <div class="kt-portlet__head-label">
               <h3 class="kt-portlet__head-title">المستخدمون</h3>
-            </div>
+            </div>  
             <div class="kt-portlet__head-toolbar"></div>
+            <div class="kt-portlet__head-toolbar" style="margin-top: 7px;">
+                <a href="{{route('admin.admins.excel')}}" class="btn btn-outline-success" class="popupFormBtn btn btn-success">
+                <i class="fa fa-file-excel"></i>&nbsp;إكسل
+                </a>
+             </div>
           </div>
           <!--begin::Form-->
           <div class="kt-portlet__body">

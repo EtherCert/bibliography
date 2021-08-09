@@ -151,9 +151,6 @@
                 <li id="home" class="kt-menu__item " aria-haspopup="true"><a href="{{route('admin.dashboard')}}" class="kt-menu__link ">
                   <i class="kt-menu__link-icon fa fa-tachometer-alt"></i><span class="kt-menu__link-text">الرئيسة </span></a>
                 </li>
-                <li id="studies" class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link ">
-                  <i class="kt-menu__link-icon fa fa-blog"></i><span class="kt-menu__link-text">الدراسات</span></a>
-                </li>
                 <li id="" class="kt-menu__item " aria-haspopup="true"><a href="#" class="kt-menu__link ">
                   <i class="kt-menu__link-icon fa fa-money-check"></i><span class="kt-menu__link-text">الطلبات </span></a>
                 </li>

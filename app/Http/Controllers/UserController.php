@@ -341,5 +341,5 @@ class UserController extends Controller
         alert()->success('تم تغيير كلمة المرور بنجاح', $siteName);
         
         return redirect()->back()->with('message_flash');
-    }
+    }  
 }

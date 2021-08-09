@@ -73,7 +73,7 @@ Route::post('/users/my-update', 'App\Http\Controllers\UserController@myUpdate')-
 Route::post('/users/change-password', 'App\Http\Controllers\UserController@changePassword')->name('users.change-password'); 
 Route::get('/users/details/{id}', 'App\Http\Controllers\UserController@details')->name('users.details'); 
 Route::post('/users/change-password/admin', 'App\Http\Controllers\UserController@changePasswordByAdmin')->name('users.change-password.admin');    
-    
+Route::get('/admins/excel', 'App\Http\Controllers\ExportExcelController@exportAdmins')->name('admins.excel');     
 /* 
 |--------------------------------------------------------------------------
 Here Members
@@ -81,14 +81,22 @@ Here Members
 */
 Route::get('/members', 'App\Http\Controllers\UserController@indexMembers')->name('members.index'); 
 Route::get('/members/details/{id}', 'App\Http\Controllers\UserController@detailsMember')->name('members.details'); 
+Route::get('/member/excel', 'App\Http\Controllers\ExportExcelController@exportMembers')->name('members.excel');     
 
 /* 
 |--------------------------------------------------------------------------
-Here Members
+Here Studies
 |--------------------------------------------------------------------------
 */
 Route::get('/studies/{study_state}', 'App\Http\Controllers\StudyController@indexAdmin')->name('studies.index');
 Route::get('/study/details/{id}', 'App\Http\Controllers\StudyController@detailsAdmin')->name('study.details');     
+Route::get('/download-summary-ar/{id}', 'App\Http\Controllers\StudyController@downloadSummaryAr')->name('study.download-summary-ar'); 
+Route::get('/download-summary-en/{id}', 'App\Http\Controllers\StudyController@downloadSummaryEn')->name('study.download-summary-en');     
+Route::get('/download-study/{id}', 'App\Http\Controllers\StudyController@downloadStudyFile')->name('study.download-study'); 
+Route::get('/download-search-leave/{id}', 'App\Http\Controllers\StudyController@downloadSearchLeave_File')->name('study.download-study-leave');     
+Route::post('/change-status-or-transferer/{id}', 'App\Http\Controllers\StudyController@changeStatusOrTransfere')->name('change-status-or-transfere');
+Route::get('/studies/excel/scientific/{study_state}', 'App\Http\Controllers\ExportExcelController@exportScientificStudy')->name('studies.excel.scientific');    
+Route::get('/studies/excel/state/{study_state}', 'App\Http\Controllers\ExportExcelController@exportStateStudyExport')->name('studies.excel.state');    
 });
 
 /* 

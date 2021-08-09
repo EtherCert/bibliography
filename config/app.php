@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        
         /*
          * Package Service Providers...
          */
@@ -177,7 +177,7 @@ return [
 		RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 		UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
-		
+		Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -233,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 		'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 		'Image' => Intervention\Image\Facades\Image::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

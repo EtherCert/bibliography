@@ -1,5 +1,5 @@
 <?php 
-$mobile = $study->mobile;
+$mobile = $study->userMembers->mobile;
 if(substr($mobile, 0, 3 ) !== "966" && substr($mobile, 0, 4 ) !== "+966" && substr($mobile, 0, 5 ) !== "00966")
 $mobile = '966'.$mobile;
 ?>
@@ -23,7 +23,7 @@ $mobile = '966'.$mobile;
       </div>
       <div class="kt-portlet__head-toolbar" style="margin-top: 7px;">
         <div class="kt-demo-icon">
-          <a title="تواصل عبر الواتساب" href="http://wa.me/{{$mobile}}" class="kt-demo-icon__preview kt-font-success">
+          <a title="تواصل مع المشترك عبر الواتساب" href="http://wa.me/{{$mobile}}" class="kt-demo-icon__preview kt-font-success">
           <i class="fab fa-whatsapp"></i>
           </a>
         </div>
@@ -70,7 +70,7 @@ $mobile = '966'.$mobile;
                     <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" id="Mask-Copy" fill="#000000" fill-rule="nonzero" />
                   </g>
                 </svg>
-                الإتصال والتواصل
+                ملخص الدراسة
               </a>
             </li>
             <li class="nav-item">
@@ -83,7 +83,7 @@ $mobile = '966'.$mobile;
                     <path d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z" id="Mask-Copy" fill="#000000" opacity="0.3" />
                   </g>
                 </svg>
-                تغيير كلمة المرور
+                الإجراءات
               </a>
             </li>
           </ul>
@@ -180,39 +180,28 @@ $mobile = '966'.$mobile;
                       <div class="kt-portlet__body">
                         <!--begin::widget 12-->
                         <div class="kt-widget4">
-                          <div class="kt-widget4__item">
-                            <p class="">الدولة: 
-                              {{$study->country}}
-                            </p>
+                            <h5>ملخص الدراسة بالعربي: 
+                             <a href="{{route('admin.study.download-summary-ar', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
-                            <i class="fa fa-map-marked-alt"></i>
-                            </span>
-                          </div>
-                          <div class="kt-widget4__item">
-                            <p class="">المدينة: 
-                              {{$study->city}}
-                            </p>
-                            <span class="kt-widget4__icon">
-                            <i class="fa fa-map-signs"></i>
-                            </span>
-                          </div>
+                            <i class="fas fa-download "></i>
+                            </span> تحميل</a>
+                            </h5>
                           <div class="kt-widget4__item">
                             <p class="">
-                              رقم الجوال: 
-                              {{$study->mobile}}
+                              {!!$study->summary_ar!!}
                             </p>
-                            <span class="kt-widget4__icon">
-                            <i class="fas fa-phone "></i>
-                            </span>
                           </div>
-                          <div class="kt-widget4__item">
-                            <p class="kt-font-{{$study->email_verified_at != null? 'success':'danger'}}">
-                              البريد الإلكتروني:  
-                              {{$study->email}}
-                            </p>
+                            <br>
+                            <h5>ملخص الدراسة بالإنجليزي: 
+                            <a href="{{route('admin.study.download-summary-en', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
-                            <i class="fas fa-envelope kt-font-{{$study->email_verified_at != null? 'success':'danger'}}"></i>
-                            </span>
+                            <i class="fas fa-download "></i>
+                            </span> تحميل</a>
+                            </h5>
+                          <div class="kt-widget4__item">
+                            <p class=""> 
+                               {!!$study->summary_en!!}
+                            </p>
                           </div>
                         </div>
                         <!--end::Widget 12-->
@@ -225,48 +214,103 @@ $mobile = '966'.$mobile;
             </div>
           </div>
           <div class="tab-pane" id="kt_apps_user_edit_tab_3" role="tabpanel">
-            <div class="kt-form kt-form--label-right">
-              <form action="{{ route('admin.users.change-password.admin') }}" method="post">
-                @csrf  
-                <div class="kt-form__body">
-                  <div class="kt-section kt-section--first">
-                    <div class="kt-section__body">
-                      <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">كلمة المرور الجديدة </label>
-                        <div class="col-lg-9 col-xl-6">
-                          <input minLength="8" type="password" class="form-control @error('password') is-invalid @enderror" value="" name="password">
-                          <input type="hidden" class="form-control" value="{{$study->id}}" name="member_id">
-                          @error('password')
-                          <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
+                <div class="kt-form kt-form--label-right">
+              <div class="kt-form__body">
+                <div class="kt-section kt-section--first">
+                  <div class="col-xl-12 col-lg-12 order-lg-1 order-xl-1">
+                    <!--begin:: Widgets/Last Updates-->
+                    <div class="kt-portlet kt-portlet--height-fluid">
+                      <div class="kt-portlet__body">
+                        <!--begin::widget 12-->
+                        <div class="kt-widget4">
+                            <h5>ملف الدراسة: 
+                            <a href="{{route('admin.study.download-study', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                            <span class="kt-widget4__icon">
+                            <i class="fas fa-download "></i>
+                            </span> تحميل</a>
+                            <a title="مشاهدة" href="{{asset('storage/'.$study->study_file)}}" class="btn btn-label-primary btn-sm btn-upper">
+                            <span class="kt-widget4__icon">
+                            <i class="fas fa-eye "></i>
+                            </span></a>
+                            </h5>
+                        @if($study->study_type == 'دراسة في مرحلة دراسات عليا')    
+                          <div class="kt-widget4__item">
+                          </div>
+                            <br>
+                            <h5>إجازة البحث من القسم العلمي: 
+                            <a href="{{route('admin.study.download-study-leave', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                            <span class="kt-widget4__icon">
+                            <i class="fas fa-download "></i>
+                            </span> تحميل</a>
+                            <a title="مشاهدة" href="{{asset('storage/'.$study->search_leave_file)}}" class="btn btn-label-primary btn-sm btn-upper">
+                            <span class="kt-widget4__icon">
+                            <i class="fas fa-eye "></i>
+                            </span></a>
+                            </h5>
+                        @endif   
+                        <div class="kt-widget4__item"></div>
+                            <div class="kt-widget4__item" style="margin:auto;">
+                <form action="{{route('admin.change-status-or-transfere', ['id' => $study->id])}}" method="post" novalidate="novalidate">
+                    @csrf
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="Username">الحالة</label>
+                          <select name="study_state" class="form-control">
+                            <option value=""></option>
+                            <option {{ $study->study_state == 'قيد المراجعة'? ' selected' : '' }} value="قيد المراجعة">قيد المراجعة</option>
+                            @if($study->userAdmins->type != 3)  
+                            <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
+                            @endif  
+                            <option {{ $study->study_state == 'مرفوضة'? ' selected' : '' }} value="مرفوضة">مرفوضة</option>
+                          </select>
                         </div>
                       </div>
-                      <div class="form-group form-group-last row">
-                        <label class="col-xl-3 col-lg-3 col-form-label"> تــأكيــد كلمـة المـرور</label>
-                        <div class="col-lg-9 col-xl-6">
-                          <input minLength="8" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" value="" name="password_confirmation">
-                          @error('password_confirmation')
-                          <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                          </span>
-                          @enderror
+                     @if($study->userAdmins->type == 3)  
+                        <?php $users = App\Models\User::where('type' , '=' , '1')
+                                       ->orWhere('type' , '=' , '2')->get();
+                        ?> 
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="Username">إحالة للمعتمد أو المسؤول</label>
+                          <select name="admin_id" class="form-control selectpicker" data-live-search="true">
+                            <option value=""></option>
+                            @foreach($users as $user)  
+                            <option {{ old('admin_id') == $user->id ? ' selected' : '' }} value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach  
+                          </select>
+                        </div>
+                      </div>
+                      @endif     
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="Username">ملاحظات الأدمن</label>
+                            <textarea rows="6" value="" class="form-control m-input m-input--square" name="admin_note">{{$study->admin_note}}</textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="Username">سبب الرفض</label>
+                            <textarea rows="6" value="" class="form-control m-input m-input--square" name="refuse_reason">{{$study->refuse_reason}}</textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <button type="submit" class="btn btn-danger" style="margin-top: 25px;">حفظ</button>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div class="kt-separator kt-separator--space-lg kt-separator--fit kt-separator--border-solid"></div>
-                <div class="kt-form__actions">
-                  <div class="row">
-                    <div class="col-xl-3"></div>
-                    <div class="col-lg-9 col-xl-6">
-                      <button class="btn btn-label-brand btn-bold">تغيير</button>
+                  </form>
+                                </div>
+                  
+                        </div>
+                        <!--end::Widget 12-->
+                      </div>
                     </div>
+                    <!--end:: Widgets/Last Updates-->
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
           <div class="tab-pane" id="kt_apps_user_edit_tab_4" role="tabpanel">
@@ -297,15 +341,6 @@ $mobile = '966'.$mobile;
                           </div>
                           <div class="kt-widget4__item">
                             <p class="">
-                              المرحلة: 
-                              {{$study->phase}}
-                            </p>
-                            <span class="kt-widget4__icon">
-                            <i class="flaticon2-line-chart "></i>
-                            </span>
-                          </div>
-                          <div class="kt-widget4__item">
-                            <p class="">
                               اسم الباحث: 
                               {{$study->researcher_name}}
                             </p>
@@ -313,6 +348,7 @@ $mobile = '966'.$mobile;
                             <i class="fas fa-search "></i>
                             </span>
                           </div>
+                        @if($study->study_type == 'دراسة في مرحلة دراسات عليا')    
                           <div class="kt-widget4__item">
                             <p class="">
                               اسم المشرف: 
@@ -322,6 +358,25 @@ $mobile = '966'.$mobile;
                             <i class="fas fa-user-cog"></i>
                             </span>
                           </div>
+                          <div class="kt-widget4__item">
+                            <p class="">
+                              المرحلة: 
+                              {{$study->phase}}
+                            </p>
+                            <span class="kt-widget4__icon">
+                            <i class="flaticon2-line-chart "></i>
+                            </span>
+                          </div>
+                        <div class="kt-widget4__item">
+                            <p class="">
+                              القسم العلمي: 
+                              {{$study->department_name}}
+                            </p>
+                            <span class="kt-widget4__icon">
+                            <i class="flaticon2-line-chart "></i>
+                            </span>
+                          </div>    
+                        @endif    
                           <div class="kt-widget4__item">
                             <p class="">
                               الناشر: 

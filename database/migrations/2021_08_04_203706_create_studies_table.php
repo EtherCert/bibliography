@@ -24,6 +24,8 @@ class CreateStudiesTable extends Migration
             $table->longText('summary_ar');
             $table->longText('summary_en');
             $table->string('study_file');
+            $table->string('summary_ar_file');
+            $table->string('summary_en_file');
             $table->string('department_name');//high level studies
             $table->string('publisher');
             $table->string('publish_place');
@@ -34,7 +36,8 @@ class CreateStudiesTable extends Migration
             $table->boolean('accept_conditions')->default(0);
             $table->bigInteger('member_id')->unsigned()->nullable();
             $table->enum('study_state', ['مرفوضة', 'منشورة','قيد المراجعة'])->default('قيد المراجعة');
-            $table->longText('refuse_reason');
+            $table->longText('refuse_reason')->nullable();
+            $table->longText('admin_note')->nullable();
             $table->bigInteger('admin_id')->unsigned()->nullable();
             $table->enum('study_type', ['دراسة في مرحلة دراسات عليا','دراسة علمية']);
             $table->timestamps();
