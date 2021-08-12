@@ -203,7 +203,6 @@ class UserController extends Controller
         }else{
             abort(404);
         }
-        
     }
     /**
      * Show the form for editing the specified resource.
@@ -341,5 +340,35 @@ class UserController extends Controller
         alert()->success('تم تغيير كلمة المرور بنجاح', $siteName);
         
         return redirect()->back()->with('message_flash');
-    }  
+    }
+    
+    
+     public function memberUpdate(Request $request){
+        if(Auth::check()){
+         $user = Auth::user();
+         $request->validate([
+            'name' => 'required|string|max:255',
+            'mobile' => 'required|string|min:10|max:14',
+            'email' => 'required|email',
+            'birthday' => 'required|date',
+            'identity' => 'required|string',
+            ]);
+
+        $user->name = $request->name;        
+        $user->mobile = $request->mobile;
+        $user->email = $request->email;
+        $user->birthday = $request->birthday;
+        $user->identity = $request->identity;   
+        
+        $user->save();
+        
+        return back()->with(
+                [
+                    'message_flash'=> sprintf('تم تعديل بياناتك بنجاح! '),
+                    'alert' => 'alert-solid-success'
+                ]); 
+        }else{
+            abort(404);
+        }
+    }
 }

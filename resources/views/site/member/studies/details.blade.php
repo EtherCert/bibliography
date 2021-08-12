@@ -1,9 +1,4 @@
-<?php 
-$mobile = $study->userMembers->mobile;
-if(substr($mobile, 0, 3 ) !== "966" && substr($mobile, 0, 4 ) !== "+966" && substr($mobile, 0, 5 ) !== "00966")
-$mobile = '966'.$mobile;
-?>
-@extends('../layouts.include-admin')
+@extends('../layouts.include-member')
 @section('title', 'الدراسة | التفاصيل') 
 @section('content')
 <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
@@ -19,13 +14,6 @@ $mobile = '966'.$mobile;
           <span class="kt-input-icon__icon kt-input-icon__icon--right">
           <span><i class="flaticon2-search-1"></i></span>
           </span>
-        </div>
-      </div>
-      <div class="kt-portlet__head-toolbar" style="margin-top: 7px;">
-        <div class="kt-demo-icon">
-          <a title="تواصل مع المشترك عبر الواتساب" href="http://wa.me/{{$mobile}}" class="kt-demo-icon__preview kt-font-success">
-          <i class="fab fa-whatsapp"></i>
-          </a>
         </div>
       </div>
     </div>
@@ -71,19 +59,6 @@ $mobile = '966'.$mobile;
                   </g>
                 </svg>
                 ملخص الدراسة
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="tab" href="#kt_apps_user_edit_tab_3" role="tab">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <rect id="bound" x="0" y="0" width="24" height="24" />
-                    <path d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z" id="Path-50" fill="#000000" opacity="0.3" />
-                    <path d="M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z" id="Mask" fill="#000000" opacity="0.3" />
-                    <path d="M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z" id="Mask-Copy" fill="#000000" opacity="0.3" />
-                  </g>
-                </svg>
-                الإجراءات
               </a>
             </li>
           </ul>
@@ -181,7 +156,7 @@ $mobile = '966'.$mobile;
                         <!--begin::widget 12-->
                         <div class="kt-widget4">
                             <h5>ملخص الدراسة بالعربي: 
-                             <a href="{{route('admin.study.download-summary-ar', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                             <a href="{{route('member.study.download-summary-ar', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
                             <i class="fas fa-download "></i>
                             </span> تحميل</a>
@@ -193,7 +168,7 @@ $mobile = '966'.$mobile;
                           </div>
                             <br>
                             <h5>ملخص الدراسة بالإنجليزي: 
-                            <a href="{{route('admin.study.download-summary-en', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                            <a href="{{route('member.study.download-summary-en', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
                             <i class="fas fa-download "></i>
                             </span> تحميل</a>
@@ -203,28 +178,9 @@ $mobile = '966'.$mobile;
                                {!!$study->summary_en!!}
                             </p>
                           </div>
-                        </div>
-                        <!--end::Widget 12-->
-                      </div>
-                    </div>
-                    <!--end:: Widgets/Last Updates-->
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane" id="kt_apps_user_edit_tab_3" role="tabpanel">
-                <div class="kt-form kt-form--label-right">
-              <div class="kt-form__body">
-                <div class="kt-section kt-section--first">
-                  <div class="col-xl-12 col-lg-12 order-lg-1 order-xl-1">
-                    <!--begin:: Widgets/Last Updates-->
-                    <div class="kt-portlet kt-portlet--height-fluid">
-                      <div class="kt-portlet__body">
-                        <!--begin::widget 12-->
-                        <div class="kt-widget4">
+                            <br>
                             <h5>ملف الدراسة: 
-                            <a href="{{route('admin.study.download-study', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                            <a href="{{route('member.study.download-study', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
                             <i class="fas fa-download "></i>
                             </span> تحميل</a>
@@ -233,12 +189,12 @@ $mobile = '966'.$mobile;
                             <i class="fas fa-eye "></i>
                             </span></a>
                             </h5>
-                        @if($study->study_type == 'دراسة في مرحلة دراسات عليا')    
+                          @if($study->study_type == 'دراسة في مرحلة دراسات عليا')    
                           <div class="kt-widget4__item">
                           </div>
                             <br>
                             <h5>إجازة البحث من القسم العلمي: 
-                            <a href="{{route('admin.study.download-study-leave', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
+                            <a href="{{route('member.study.download-study-leave', ['id' => $study->id])}}" class="btn btn-label-success btn-sm btn-upper">
                             <span class="kt-widget4__icon">
                             <i class="fas fa-download "></i>
                             </span> تحميل</a>
@@ -247,69 +203,7 @@ $mobile = '966'.$mobile;
                             <i class="fas fa-eye "></i>
                             </span></a>
                             </h5>
-                        @endif   
-                        <div class="kt-widget4__item"></div>
-                            <div class="kt-widget4__item" style="margin:auto;">
-                <form action="{{route('admin.change-status-or-transfere', ['id' => $study->id])}}" method="post" novalidate="novalidate">
-                    @csrf
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="Username">الحالة</label>
-                          <select name="study_state" class="form-control">
-                            <option value=""></option>
-                            <option {{ $study->study_state == 'قيد المراجعة'? ' selected' : '' }} value="قيد المراجعة">قيد المراجعة</option>
-                            @if($study->userAdmins) 
-                            @if($study->userAdmins->type != 3) 
-                            <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
-                            @endif  
-                            @endif 
-                            @if(Auth::user()->type == 1)
-                              <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
-                            @endif  
-                            <option {{ $study->study_state == 'مرفوضة'? ' selected' : '' }} value="مرفوضة">مرفوضة</option>
-                          </select>
-                        </div>
-                      </div>
-                     @if($study->userAdmins)
-                     @if($study->userAdmins->type == 3)  
-                        <?php $users = App\Models\User::where('type' , '=' , '1')
-                                       ->orWhere('type' , '=' , '2')->get();
-                        ?> 
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="Username">إحالة للمعتمد أو المسؤول</label>
-                          <select name="admin_id" class="form-control selectpicker" data-live-search="true">
-                            <option value=""></option>
-                            @foreach($users as $user)  
-                            <option {{ old('admin_id') == $user->id ? ' selected' : '' }} value="{{$user->id}}">{{$user->name}}</option>
-                            @endforeach  
-                          </select>
-                        </div>
-                      </div>
-                      @endif     
-                      @endif     
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="Username">ملاحظات الأدمن</label>
-                            <textarea rows="6" value="" class="form-control m-input m-input--square" name="admin_note">{{$study->admin_note}}</textarea>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label for="Username">سبب الرفض</label>
-                            <textarea rows="6" value="" class="form-control m-input m-input--square" name="refuse_reason">{{$study->refuse_reason}}</textarea>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <button type="submit" class="btn btn-danger" style="margin-top: 25px;">حفظ</button>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                                </div>
-                  
+                           @endif 
                         </div>
                         <!--end::Widget 12-->
                       </div>
@@ -332,7 +226,7 @@ $mobile = '966'.$mobile;
                         <div class="kt-widget4">
                           <div class="kt-widget4__item">
                             <p class="">المشترك: 
-                             <span><a title="تفاصيل المشترك" href="{{route('admin.members.details', ['id' => $study->userMembers->id])}}">{{$study->userMembers->name}}</a></span>
+                             <span>{{$study->userMembers->name}}</span>
                             </p>
                             <span class="kt-widget4__icon">
                             <i class="fa fa-user "></i>

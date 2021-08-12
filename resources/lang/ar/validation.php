@@ -253,5 +253,6 @@ return [
         'study_state'           => 'حالة الدراسة',
         'refuse_reason'         => 'سبب الرفض',
         'study_type'            => 'نوع الدراسة',
+        'publish_date'          => 'سنة النشر',
         ],
 ];

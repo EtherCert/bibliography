@@ -14,13 +14,13 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::prefix('admin/')->name('admin.')->group(function () {
+
 /* 
 |--------------------------------------------------------------------------
 Notifications
 |--------------------------------------------------------------------------
-*/
-Route::prefix('admin/')->name('admin.')->group(function () {
- 
+*/    
 Route::get('notifications','App\Http\Controllers\NotificationsController@index')->name('notifications');
 Route::delete('notifications/{id}','App\Http\Controllers\NotificationsController@delete')->name('notifications.delete');
 Route::delete('notifications-add/','App\Http\Controllers\NotificationsController@deleteAll')->name('notifications-delete-all');
@@ -43,18 +43,8 @@ Route::put('update-password', 'HomeController@updatePassword')->name('update-pas
 Here Settings
 |--------------------------------------------------------------------------
 */
-Route::resource('settings', 'App\Http\Controllers\SettingController')->only(['index', 'edit','update']); 
-        
-/*
-|--------------------------------------------------------------------------
-| Here Admin FileManager 
-|--------------------------------------------------------------------------
-*/
+Route::resource('settings', 'App\Http\Controllers\SettingController')->only(['index', 'edit','update']);     
 
- Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-     \UniSharp\LaravelFilemanager\Lfm::routes();
- });
-    
 /*
 |--------------------------------------------------------------------------
 | Here Info 
@@ -107,6 +97,14 @@ Route::resource('contacts', 'App\Http\Controllers\ContactController')->only(['in
 Route::get('/contacts/mark-read/{id}', 'App\Http\Controllers\ContactController@markRead')->name('contacts.mark-read');  
 Route::get('/contacts/delete-all', 'App\Http\Controllers\ContactController@deleteAll')->name('contacts.delete.all');  
     
+/* 
+|--------------------------------------------------------------------------
+Here Chats
+|--------------------------------------------------------------------------
+*/ 
+Route::get('chat/{id}', 'App\Http\Controllers\ChatController@indexAdmin')->name('chat.index'); 
+Route::post('chat/store', 'App\Http\Controllers\ChatController@storeAdmin')->name('chat.store'); 
+    
 });
 
 /* 
@@ -118,7 +116,7 @@ Auth::routes();
 Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم مهم
 Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم مهم
 
-////////////////////////////// Here Public //////////////////////////////
+////////////////////////////// Here Start Public //////////////////////////////
 /* 
 |--------------------------------------------------------------------------
 Here Home Page
@@ -137,3 +135,44 @@ Here Studies
 |--------------------------------------------------------------------------
 */
 Route::get('/study/{id}', 'App\Http\Controllers\StudyController@detailsPublic')->name('study.details');     
+
+////////////////////////////// Here End Public //////////////////////////////
+Route::prefix('member/')->name('member.')->group(function () {
+/*
+|--------------------------------------------------------------------------
+| Here Home Controller
+|--------------------------------------------------------------------------
+*/
+//Route::get('bloked', 'HomeController@bloked')->name('bloked');    
+//Route::get('no-access', 'HomeController@noAccess')->name('no-access');    
+Route::get('dashboard', 'App\Http\Controllers\HomeMemberController@dashboard')->name('dashboard');    
+//Route::get('profile', 'HomeController@profile')->name('profile');
+Route::get('edit-profile', 'App\Http\Controllers\HomeMemberController@editMember')->name('edit-profile');    
+Route::put('update-profile', 'App\Http\Controllers\HomeMemberController@memeberUpdate')->name('update-profile');    
+Route::put('update-password', 'App\Http\Controllers\HomeMemberController@updatePassword')->name('update-password');   
+
+/*
+|--------------------------------------------------------------------------
+| Here Studies Controller
+|--------------------------------------------------------------------------
+*/    
+Route::get('/studies/{study_state}', 'App\Http\Controllers\StudyController@indexMember')->name('studies.index');
+Route::get('/studies/create/{study_type}', 'App\Http\Controllers\StudyController@create')->name('studies.create');
+Route::post('/studies/store', 'App\Http\Controllers\StudyController@store')->name('studies.store');
+Route::get('/studies/edit/{id}', 'App\Http\Controllers\StudyController@edit')->name('studies.edit');
+Route::put('/studies/update/{id}', 'App\Http\Controllers\StudyController@update')->name('studies.update');    
+Route::get('/study/details/{id}', 'App\Http\Controllers\StudyController@detailsMember')->name('study.details'); Route::get('/download-summary-ar/{id}', 'App\Http\Controllers\StudyController@downloadSummaryAr')->name('study.download-summary-ar'); 
+Route::get('/download-summary-en/{id}', 'App\Http\Controllers\StudyController@downloadSummaryEn')->name('study.download-summary-en');     
+Route::get('/download-study/{id}', 'App\Http\Controllers\StudyController@downloadStudyFile')->name('study.download-study'); 
+Route::get('/download-search-leave/{id}', 'App\Http\Controllers\StudyController@downloadSearchLeave_File')->name('study.download-study-leave');  
+Route::get('/studies/excel/scientific/{study_state}', 'App\Http\Controllers\ExportExcelController@exportScientificStudy')->name('studies.excel.scientific');    
+Route::get('/studies/excel/state/{study_state}', 'App\Http\Controllers\ExportExcelController@exportStateStudyExport')->name('studies.excel.state'); 
+/* 
+|--------------------------------------------------------------------------
+Here Chats
+|--------------------------------------------------------------------------
+*/ 
+Route::get('chat', 'App\Http\Controllers\ChatController@indexMember')->name('chat.index'); 
+Route::post('chat/store', 'App\Http\Controllers\ChatController@storeMember')->name('chat.store');     
+   
+});

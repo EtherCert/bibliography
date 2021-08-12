@@ -130,41 +130,33 @@
                             </div>
                         </div>   
                        <div class="form-group row">
-                            <div class="col-lg-6">
-                              <label for="User_FirstName">الشعار</label>
-                              <div class="input-group">
-                                 <span class="input-group-btn">
-                                 <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary text-white">
-                                 <i style="color:white;" class="fa fa-file-image"></i> اختر
-                                 </a>
-                                 </span>
-                                 <input value="{{old('logo', $settings->logo)}}" required id="thumbnail" class="form-control @error('logo') is-invalid @enderror" type="text" name="logo">
-                                 @error('logo')
-                                 <span class="invalid-feedback" role="alert">
-                                 <strong>{{ $message }}</strong>
-                                 </span>
-                                 @enderror
-                              </div>
-                              <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                           </div>
-                        <div class="col-lg-6">
-                              <label for="User_FirstName">الختم</label>
-                              <div class="input-group">
-                                 <span class="input-group-btn">
-                                 <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
-                                 <i style="color:white;" class="fa fa-file-image"></i> اختر
-                                 </a>
-                                 </span>
-                                 <input value="{{old('seal', $settings->seal)}}" required id="thumbnail2" class="form-control @error('seal') is-invalid @enderror" type="text" name="seal">
-                                 @error('seal')
-                                 <span class="invalid-feedback" role="alert">
-                                 <strong>{{ $message }}</strong>
-                                 </span>
-                                 @enderror
-                              </div>
-                              <div id="holder2" style="margin-top:15px;max-height:100px;"></div>
-                           </div>
-                           </div>
+                        <div class="form-group col-md-6">
+                        <label>الشعار</label>
+                        <div class="custom-file">
+                            <input name="logo" value="{{old('logo', $settings->logo)}}" type="file" accept="image/*"  class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">اختر</label>
+                        </div> 
+                        <label><a target="_blank" href="{{asset('storage/'.old('logo', $settings->logo))}}">عرض</a></label>   
+                        @error('logo')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                       </div> 
+                       <div class="form-group col-md-6">
+                        <label>الختم</label>
+                        <div class="custom-file">
+                            <input name="seal" value="{{old('seal', $settings->seal)}}" type="file" accept="image/*"  class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">اختر</label>
+                        </div> 
+                        <label><a target="_blank" href="{{asset('storage/'.old('seal', $settings->seal))}}">عرض</a></label>   
+                        @error('seal')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                       </div> 
+                       </div>
                         <div class="form-group row">
                             <div class="col-lg-12">
                                 <label>الأحكام والشروط</label>

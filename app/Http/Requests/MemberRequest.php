@@ -25,9 +25,9 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         $valid = [
-            'f_name' => 'required|max:50',
-            's_name' => 'required|max:50',
-            't_name' => 'required|max:50',
+            'f_name' => 'max:50',
+            's_name' => 'max:50',
+            't_name' => 'max:50',
             'fo_name' => 'max:50',
             'mobile' => 'required|string|min:10|max:14',
             'birthday' => 'required|date',

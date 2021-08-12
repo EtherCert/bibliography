@@ -140,6 +140,12 @@
                                   <span class="kt-nav__link-text">واتساب</span>
                                   </a>
                                 </li>
+                                <li class="kt-nav__item" style="float: center;">
+                                  <a  href="{{route('admin.chat.index', ['id'=>$user->id])}}" class="kt-nav__link"> 
+                                  <i class="kt-nav__link-icon fa fa-comments"></i>
+                                  <span class="kt-nav__link-text">رسالة</span>
+                                  </a>
+                                </li>
                                 <li class="kt-nav__item">
                                   <form method="post" class="form-inline" action="{{ route('admin.users.destroy', ['user' => $user->id]) }}">
                                     @csrf

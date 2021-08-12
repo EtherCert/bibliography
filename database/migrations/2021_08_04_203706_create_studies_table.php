@@ -27,13 +27,13 @@ class CreateStudiesTable extends Migration
             $table->string('summary_ar_file');
             $table->string('main_img');
             $table->string('summary_en_file');
-            $table->string('department_name');//high level studies
+            $table->string('department_name')->nullable();//high level studies
             $table->string('publisher');
             $table->string('publish_place');
             $table->string('publish_date')->nullable();
             $table->string('keywords')->nullable();
             $table->integer('number_of_pages');
-            $table->string('search_leave_file');// خاص بدراسات المراحل العليا (إجازة البحث من القسم العلمي)
+            $table->string('search_leave_file')->nullable();// خاص بدراسات المراحل العليا (إجازة البحث من القسم العلمي)
             $table->boolean('accept_conditions')->default(0);
             $table->bigInteger('member_id')->unsigned()->nullable();
             $table->enum('study_state', ['مرفوضة', 'منشورة','قيد المراجعة'])->default('قيد المراجعة');

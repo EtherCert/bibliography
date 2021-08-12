@@ -79,17 +79,17 @@ class SettingController extends Controller
         // validate incoming request
         $settings = Setting::findOrFail($id);
         
-//        if ($request->hasFile('logo')) {
-//            $logo = $request->file('logo');
-//            $path = $logo->store('images' , 'public');
-//            $settings->logo =  $path;
-//        } 
-//        
-//        if ($request->hasFile('seal')) {
-//            $seal = $request->file('seal');
-//            $path = $seal->store('images' , 'public');
-//            $settings->seal =  $path;
-//        }
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $path = $logo->store('images' , 'public');
+            $settings->logo =  $path;
+        } 
+        
+        if ($request->hasFile('seal')) {
+            $seal = $request->file('seal');
+            $path = $seal->store('images' , 'public');
+            $settings->seal =  $path;
+        }
         $settings->email = $request->input('email');
         $settings->siteName = $request->input('siteName');
         $settings->siteNameEng = $request->input('siteNameEng');
@@ -108,8 +108,6 @@ class SettingController extends Controller
         $settings->snapchat = $request->input('snapchat');
         $settings->num_of_elements = $request->input('num_of_elements');
         $settings->privacy = $request->input('privacy');
-        $settings->logo = parse_url($request->logo)['path'];
-        $settings->seal = parse_url($request->seal)['path'];
         
         $settings->save();
         return redirect(route('admin.settings.index'))->with([

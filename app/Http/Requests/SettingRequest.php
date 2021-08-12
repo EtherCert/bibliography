@@ -40,12 +40,11 @@ class SettingRequest extends FormRequest
             'twitter'       => 'required|max:100|regex:' . $regex,
             'instegram'     => 'required|max:100|regex:' . $regex,
             'snapchat'      => 'required|max:100|regex:' . $regex,
-            'logo'          => 'required|max:200',
-            'seal'          => 'required|max:200',
+            'logo'          => 'max:10000|mimes:jpeg,jpg,png,gif',
+            'seal'          => 'max:10000|mimes:jpeg,jpg,png,gif',
             'num_of_elements'  => 'numeric|min:0',
             'color'         => 'max:200',
             'privacy'       => 'required|string',
-            
         ];
     }
 }
