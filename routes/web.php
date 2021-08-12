@@ -113,8 +113,9 @@ Here Laravel Route
 |--------------------------------------------------------------------------
 */ 
 Auth::routes();
-Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم مهم
-Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم مهم
+Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم
+Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم
+Route::get('/reload-captcha', [App\Http\Controllers\MemberController::class, 'reloadCaptcha']);
 
 ////////////////////////////// Here Start Public //////////////////////////////
 /* 

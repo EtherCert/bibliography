@@ -106,6 +106,11 @@ class MemberController extends Controller
         
         return redirect(route('login'));
     }
+    
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img()]);
+    }
 
     /**
      * Display the specified resource.

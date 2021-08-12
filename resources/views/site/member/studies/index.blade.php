@@ -148,12 +148,14 @@
                                   </a>
                                 </li>
                                 @endif
+                                @if($study->study_state != 'منشورة')  
                                 <li class="kt-nav__item" style="float: center;">
                                   <a href="{{route('member.studies.edit', ['id' => $study->id])}}" class="kt-nav__link"> 
                                   <i class="kt-nav__link-icon fa fa-pencil-alt"></i>
                                   <span class="kt-nav__link-text">تعديل</span>
                                   </a>
-                                </li>  
+                                </li> 
+                                @endif
                               </ul>
                             </div>
                           </div>

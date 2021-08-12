@@ -196,7 +196,7 @@ class StudyController extends Controller
         $auth_user = Auth::user();
         $study = Study::findOrFail($id);
          
-         if(($study->member_id == $auth_user->id &&  $auth_user->type == 0))
+         if(($study->member_id == $auth_user->id &&  $auth_user->type == 0) && $study->study_state != 'منشورة')
          return view('site.member.studies.edit')->with([
             'study'        => $study,
             'settings'     => $this->settings,
@@ -215,6 +215,7 @@ class StudyController extends Controller
     {
         $study = Study::findOrFail($id);
         $auth_user = Auth::user();
+        if($study->study_state != 'منشورة'){
         
          if ($request->hasFile('summary_ar_file')) {
             $summary_ar_file = $request->file('summary_ar_file');
@@ -279,6 +280,8 @@ class StudyController extends Controller
                     'message_flash'=> sprintf('تم تعديل الدراسة  "%s" بنجاح!', $study->title_ar),
                     'alert' => 'alert-solid-success'
                 ]);
+        }
+        return view('site.member.home.no-access');
     }
 
     /**

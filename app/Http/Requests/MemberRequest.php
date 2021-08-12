@@ -24,6 +24,7 @@ class MemberRequest extends FormRequest
      */
     public function rules()
     {
+     $auth_user = Auth::user();    
         $valid = [
             'f_name' => 'max:50',
             's_name' => 'max:50',
@@ -39,12 +40,20 @@ class MemberRequest extends FormRequest
             'city' => 'required|string|max:200',
             'status'   => '',
             'verify'   => '',
+            'captcha' => 'required|captcha'
         ];
 
         if ($this->isMethod('post')) {
-
+            $flag = false;
+             if($auth_user){
+                if($auth_user->type != 0)
+                $flag = true;
+            }
             $valid['password'] = 'required|string|min:8|confirmed';
-            $valid['email'] = 'required|email|max:80|confirmed';
+            if($flag)
+                $valid['email'] = 'required|email|max:80|confirmed';
+            else
+                $valid['email'] = 'required|email|max:80|confirmed|unique:users';
             $valid['username'] = 'required|max:20|min:2|alpha_dash|unique:users';
 
         }

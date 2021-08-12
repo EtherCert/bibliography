@@ -15,7 +15,10 @@
     <link rel="stylesheet" href="{{asset('site-assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('site-assets/css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('site-assets/css/rtl.css')}}">
-    <link href="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" />  
+    <link href="{{asset('assets/vendors/general/sweetalert2/dist/sweetalert2.css')}}" rel="stylesheet" type="text/css" /> 
+    <!-- start for arabic -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+    <!-- end for arabic-->  
     <title>@yield('title')</title>
     <link rel="icon" type="image/ico" href="{{asset('site-assets/img/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/earlyaccess/droidarabickufi.css" rel="stylesheet">
@@ -185,6 +188,30 @@
         </div>
       </div>
     </footer>
+      <script>
+        $(document).ready(function () {
+         function arabicInput(event) {
+            var value = String.fromCharCode(event.which);
+            var pattern = new RegExp(/^[\u0621-\u064A ]+$/);
+            return pattern.test(value);
+        }
+        $('.arabic').bind('keypress', arabicInput);
+        });
+        </script>
+        <script>
+          $("#english").keypress(function(event){
+        var ew = event.which;
+        if(ew == 32)
+            return true;
+        if(48 <= ew && ew <= 57)
+            return true;
+        if(65 <= ew && ew <= 90)
+            return true;
+        if(97 <= ew && ew <= 122)
+            return true;
+        return false;
+        });
+        </script> 
     <script src="{{asset('site-assets/js/jquery-3.5.1.min.js')}}"></script>
     <script src="{{asset('site-assets/js/popper.min.js')}}"></script>
     <script src="{{asset('site-assets/js/bootstrap.min.js')}}"></script>

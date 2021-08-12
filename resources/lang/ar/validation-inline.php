@@ -117,7 +117,6 @@ return [
     'uploaded'    => 'فشل في تحميل الـ :attribute.',
     'url'         => 'صيغة الرابط :attribute غير صحيحة.',
     'uuid'        => ':attribute يجب أن يكون بصيغة UUID سليمة.',
-
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

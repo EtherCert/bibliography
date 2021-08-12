@@ -254,5 +254,6 @@ return [
         'refuse_reason'         => 'سبب الرفض',
         'study_type'            => 'نوع الدراسة',
         'publish_date'          => 'سنة النشر',
+        'captcha'               => 'الكابتشا',
         ],
 ];

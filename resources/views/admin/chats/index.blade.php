@@ -31,7 +31,7 @@
                   <div class="kt-chat__head ">
                     <div class="kt-chat__center">
                       <div class="kt-chat__pic">
-                        <span class="kt-userpic kt-userpic--sm kt-userpic--circle" data-toggle="kt-tooltip" data-placement="top" title="" data-original-title="Jason Muller">
+                        <span class="kt-userpic kt-userpic--sm kt-userpic--circle" data-toggle="kt-tooltip" data-placement="top">
                           <div class="pagination-container">
                             {{$chats->links()}}
                           </div>
