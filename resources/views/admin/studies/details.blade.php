@@ -264,9 +264,6 @@ $mobile = '966'.$mobile;
                             <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
                             @endif  
                             @endif 
-                            @if(Auth::user()->type == 1)
-                              <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
-                            @endif  
                             <option {{ $study->study_state == 'مرفوضة'? ' selected' : '' }} value="مرفوضة">مرفوضة</option>
                           </select>
                         </div>

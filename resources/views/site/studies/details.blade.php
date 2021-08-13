@@ -6,10 +6,10 @@
     <div class="d-table-cell">
       <div class="container">
         <div class="title-item">
-          <h2 style="color: white;">تفاصيل الدراسة</h2>
+          <h5 style="color: white;">{{$study->title_ar}}</h5>
           <ul>
             <li>
-              <a href="index.html">الرئيسة</a>
+              <a href="/">الرئيسة</a>
             </li>
             <li>
               <i class='bx bx-chevrons-right'></i>
@@ -29,68 +29,146 @@
       <div class="col-lg-9">
         <div class="details-item" style="text-align: justify;">
           <div class="details-img">
-            <img src="{{asset('site-assets/img/service-details3.jpg')}}" alt="التفاصيل" style="border-radius: 20px !important;">
+            <img src="{{asset('storage/'.$study->main_img)}}" alt="التفاصيل" style="border-radius: 20px !important; width: 900px; height: 500px;">
             <ul>
               <li>
                 <i class='bx bx-user'></i>
-                By: <a href="#">admin</a>
+                <a>{{$study->researcher_name}}</a>
               </li>
               <li>
-                <i class='bx bx-calendar-alt'></i>
-                20 December, 2020
-              </li>
-              <li>
-                <i class='bx bx-message-detail'></i>
-                <a href="#">Comments (02)</a>
+                <i class='bx bx-calendar-alt' title="تاريخ النشر"></i>
+                {{explode(' ',$study->publish_date)[0]}}
               </li>
             </ul>
-            <h2>Know More About Our Clean Furniture And Tools</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-            <blockquote>
-              "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti, est aperiam expedita asperiores rem corrupti quae a quo molestias optio iure sapiente nesciunt vitae. Fugit veritatis eos iure voluptates explicabo"
-              <span>Tom Henry</span>
+            <h5>{{$study->title_ar}}</h5>
+            <h5 style="float: left;">{{$study->title_en}}</h5><br><br>
+            <blockquote style="font-size: 80%;">
+              <span>الملخص بالعربي</span>
+              <br>
+              {!!$study->summary_ar!!}
+            </blockquote> 
+            <blockquote dir="ltr" style="font-size: 90%;">
+              <span dir="rtl">الملخص بالإنجليزي</span>
+              <br>
+              {!!$study->summary_en!!}
             </blockquote>
-            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
           </div>
         </div>
       </div>
       <div class="col-lg-3">
         <div class="widget-area">
           <div class="search widget-item">
-            <form>
-              <input type="text" class="form-control" placeholder="بحث ...">
+            <form action="{{route('studies')}}#result" method="get">
+              <input name="title_ar" type="text" class="form-control" placeholder="بحث ...">
               <button type="submit" class="btn">
               <i class='bx bx-search'></i>
               </button>
             </form>
           </div>
           <div class="tags widget-item">
+            <h3>معلومات الدراسة</h3>
+            <ul>
+            <li>
+            <span>التخصص:</span>
+            {{$study->major}}
+            </li>
+            <br><br>    
+            <li>
+            <span>المرحلة:</span>
+            {{$study->phase}}
+            </li>
+            <br><br>    
+            <li>
+            <span>القسم:</span>
+            {{$study->department_name}}
+            </li>
+            <br><br>    
+            <li>
+            <span>مكان النشر:</span>
+            {{$study->publish_place}}
+            </li>
+            <br><br>    
+            <li>
+            <span>عدد الصفحات:</span>
+            {{$study->number_of_pages}}
+            </li> 
+            <br><br>    
+            <li>
+            <span>نوع الدراسة:</span>
+            {{$study->study_type}}
+            </li>
+            </ul>
+            </div>
+         <div class="tags widget-item">
+            <h3>معلومات الأشخاص</h3>
+            <ul>
+            <li>
+            <span>الباحث:</span>
+            {{$study->researcher_name}}
+            </li>
+            <br><br>    
+            <li>
+            <span>المشرف:</span>
+            {{$study->supervisor_name}}
+            </li>
+            <br><br>    
+            <li>
+            <span>الناشر:</span>
+            {{$study->publisher}}
+            </li>
+            </ul>
+            </div>
+          <div class="tags widget-item">
+          <?php 
+            $keys = explode(',', $study->keywords);
+           ?>
             <h3>كلمات مفتاحية</h3>
             <ul>
-              <li>
-                <a href="#">Cleaner</a>
+            @foreach($keys as $key)
+            @if ($loop->last)
+            @continue;
+            @endif
+                 <li>
+                <a>{{$key}}</a>
               </li>
-              <li>
-                <a href="#">Corporate</a>
-              </li>
-              <li>
-                <a href="#">Agency</a>
-              </li>
-              <li>
-                <a href="#">Office</a>
-              </li>
-              <li>
-                <a href="#">Kitchen</a>
-              </li>
-              <li>
-                <a href="#">Deep</a>
-              </li>
-              <li>
-                <a href="#">Sanitizer</a>
-              </li>
+            @endforeach
             </ul>
           </div>
+    <div class="related widget-item">
+            <h3>المرفقات</h3>
+            <div class="related-inner">
+            <ul class="align-items-center">
+            <li>
+             <a style="margin-right: 25px;" target="_blank" href="{{asset('storage/'.$study->summary_ar_file)}}">الملخص بالعربي</a>
+            <span style="margin-top: -23px;"><a title="تنزيل" href="{{route('member.study.download-summary-ar',['id' => $study->id])}}"><i class="bx bx-download"></i></a></span>
+            </li>
+            </ul>
+            </div>   
+            <div class="related-inner">
+            <ul class="align-items-center">
+            <li>
+             <a style="margin-right: 25px;" target="_blank" href="{{asset('storage/'.$study->summary_en_file)}}">الملخص بالإنجليزي</a>
+            <span style="margin-top: -23px;"><a title="تنزيل" href="{{route('member.study.download-summary-en',['id' => $study->id])}}"><i class="bx bx-download"></i></a></span>
+            </li>
+            </ul>
+            </div>    
+            <div class="related-inner">
+            <ul class="align-items-center">
+            <li>
+             <a style="margin-right: 25px;" target="_blank" href="{{asset('storage/'.$study->study_file)}}">ملف الدراسة</a>
+            <span style="margin-top: -23px;"><a title="تنزيل" href="{{route('member.study.download-study',['id' => $study->id])}}"><i class="bx bx-download"></i></a></span>
+            </li>
+            </ul>
+            </div>    
+            <div class="related-inner">
+            <ul class="align-items-center">
+            <li>
+             <a style="margin-right: 25px;" target="_blank" href="{{asset('storage/'.$study->search_leave_file)}}">ملف الإجازة</a>
+            <span style="margin-top: -23px;"><a title="تنزيل" href="{{route('member.study.download-study-leave',['id' => $study->id])}}"><i class="bx bx-download"></i></a></span>
+            </li>
+            </ul>
+            </div>    
+          </div>    
         </div>
       </div>
     </div>

@@ -14,7 +14,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::prefix('admin/')->name('admin.')->group(function () {
+Route::prefix('admin/')->name('admin.')->middleware(['general.admin', 'auth', 'verified'])->group(function () {
 
 /* 
 |--------------------------------------------------------------------------
@@ -36,8 +36,14 @@ Route::get('dashboard', 'App\Http\Controllers\HomeController@dashboard')->name('
 Route::get('profile', 'HomeController@profile')->name('profile');
 Route::get('edit-profile', 'HomeController@editProfile')->name('edit-profile');    
 Route::put('update-profile', 'HomeController@updateProfile')->name('update-profile');    
-Route::put('update-password', 'HomeController@updatePassword')->name('update-password');     
+Route::put('update-password', 'HomeController@updatePassword')->name('update-password'); 
 
+/* 
+|--------------------------------------------------------------------------
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+ Start Full Admin +-+-+-+-+-+-+-+-+-+-+-+-+-+-
+|--------------------------------------------------------------------------
+*/    
+Route::middleware(['myadmin'])->group(function () {
 /* 
 |--------------------------------------------------------------------------
 Here Settings
@@ -63,7 +69,14 @@ Route::post('/users/my-update', 'App\Http\Controllers\UserController@myUpdate')-
 Route::post('/users/change-password', 'App\Http\Controllers\UserController@changePassword')->name('users.change-password'); 
 Route::get('/users/details/{id}', 'App\Http\Controllers\UserController@details')->name('users.details'); 
 Route::post('/users/change-password/admin', 'App\Http\Controllers\UserController@changePasswordByAdmin')->name('users.change-password.admin');    
-Route::get('/admins/excel', 'App\Http\Controllers\ExportExcelController@exportAdmins')->name('admins.excel');     
+Route::get('/admins/excel', 'App\Http\Controllers\ExportExcelController@exportAdmins')->name('admins.excel');  
+
+/* 
+|--------------------------------------------------------------------------
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+ End Full Admin +-+-+-+-+-+-+-+-+-+-+-+-+-+-
+|--------------------------------------------------------------------------
+*/    
+});    
 /* 
 |--------------------------------------------------------------------------
 Here Members
@@ -136,9 +149,12 @@ Here Studies
 |--------------------------------------------------------------------------
 */
 Route::get('/study/{id}', 'App\Http\Controllers\StudyController@detailsPublic')->name('study.details');     
+Route::get('/studies', 'App\Http\Controllers\StudyController@indexPublicStudies')->name('studies');     
 
 ////////////////////////////// Here End Public //////////////////////////////
+
 Route::prefix('member/')->name('member.')->group(function () {
+Route::middleware(['member', 'auth', 'verified'])->group(function () {
 /*
 |--------------------------------------------------------------------------
 | Here Home Controller
@@ -162,10 +178,7 @@ Route::get('/studies/create/{study_type}', 'App\Http\Controllers\StudyController
 Route::post('/studies/store', 'App\Http\Controllers\StudyController@store')->name('studies.store');
 Route::get('/studies/edit/{id}', 'App\Http\Controllers\StudyController@edit')->name('studies.edit');
 Route::put('/studies/update/{id}', 'App\Http\Controllers\StudyController@update')->name('studies.update');    
-Route::get('/study/details/{id}', 'App\Http\Controllers\StudyController@detailsMember')->name('study.details'); Route::get('/download-summary-ar/{id}', 'App\Http\Controllers\StudyController@downloadSummaryAr')->name('study.download-summary-ar'); 
-Route::get('/download-summary-en/{id}', 'App\Http\Controllers\StudyController@downloadSummaryEn')->name('study.download-summary-en');     
-Route::get('/download-study/{id}', 'App\Http\Controllers\StudyController@downloadStudyFile')->name('study.download-study'); 
-Route::get('/download-search-leave/{id}', 'App\Http\Controllers\StudyController@downloadSearchLeave_File')->name('study.download-study-leave');  
+Route::get('/study/details/{id}', 'App\Http\Controllers\StudyController@detailsMember')->name('study.details');   
 Route::get('/studies/excel/scientific/{study_state}', 'App\Http\Controllers\ExportExcelController@exportScientificStudy')->name('studies.excel.scientific');    
 Route::get('/studies/excel/state/{study_state}', 'App\Http\Controllers\ExportExcelController@exportStateStudyExport')->name('studies.excel.state'); 
 /* 
@@ -177,3 +190,17 @@ Route::get('chat', 'App\Http\Controllers\ChatController@indexMember')->name('cha
 Route::post('chat/store', 'App\Http\Controllers\ChatController@storeMember')->name('chat.store');     
    
 });
+    
+Route::get('/download-summary-ar/{id}', 'App\Http\Controllers\StudyController@downloadSummaryAr')->name('study.download-summary-ar'); 
+Route::get('/download-summary-en/{id}', 'App\Http\Controllers\StudyController@downloadSummaryEn')->name('study.download-summary-en');
+Route::get('/download-study/{id}', 'App\Http\Controllers\StudyController@downloadStudyFile')->name('study.download-study'); 
+Route::get('/download-search-leave/{id}', 'App\Http\Controllers\StudyController@downloadSearchLeave_File')->name('study.download-study-leave');  
+    
+});
+
+/* 
+|--------------------------------------------------------------------------
+Here Laravel Route 
+|--------------------------------------------------------------------------
+*/ 
+Auth::routes(['verify' => true]);

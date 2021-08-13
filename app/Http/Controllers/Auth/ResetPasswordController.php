@@ -27,7 +27,25 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo()
+    {
+      $userType = \Auth::user()->type;
+        
+      if($userType == 1 || $userType == 2 || $userType == 3){
+          
+          $this->redirectTo = '/admin/dashboard';
+
+      } else if($userType == 0) {
+          
+           $this->redirectTo = '/member/dashboard';
+          
+      }else{
+       $this->redirectTo = '/';
+      }
+
+          return $this->redirectTo;
+    }
           public function changePassword(Request $request){
 
         if (!(Hash::check($request->get('current_password'), Auth::user()->password))) {

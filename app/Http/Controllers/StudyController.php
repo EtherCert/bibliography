@@ -382,4 +382,19 @@ class StudyController extends Controller
                     'alert' => 'alert-solid-success'
                 ]);    
     }
+    
+    public function indexPublicStudies()
+    {
+        
+        $title_ar = request()->query('title_ar', '');
+        
+        $studies = Study::when($title_ar, function($query, $title_ar) {
+                        return $query->where('title_ar', 'LIKE', '%' . $title_ar . '%');
+                    })->where('study_state' , '=' , 'منشورة')->orderBy('id', 'desc')->paginate($this->settings->num_of_elements);
+
+        return view('site.studies.index')->with([
+            'studies'     => $studies,
+            'title_ar'    => $title_ar,
+            ]);
+    }
 }

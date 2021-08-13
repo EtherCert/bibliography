@@ -1,4 +1,6 @@
-<?php $settings = App\Models\Setting::findOrFail(1);?>
+<?php $settings = App\Models\Setting::findOrFail(1);
+$auth_user = Auth::user();
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
@@ -58,7 +60,7 @@
                   <a href="#statistics" class="nav-link">الإحصائيات</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#studies" class="nav-link">وعاء الدراسات</a>
+                  <a href="{{route('studies')}}" class="nav-link">وعاء الدراسات</a>
                 </li>
                 <li class="nav-item">
                   <a href="#about" class="nav-link">من نحن</a>
@@ -66,14 +68,36 @@
                 <li class="nav-item">
                   <a href="#contact" class="nav-link">تواصل معنا</a>
                 </li>
+                @if($auth_user)  
+                <li class="nav-item">
+                   <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();" class="nav-link"><span>الخروج</span></a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>    
+                </li>
+                @else
+                 <li class="nav-item">
+                  <a href="{{route('login')}}" class="nav-link">الدخول</a>
+                </li> 
+                @endif
               </ul>
+              @if($auth_user)   
               <div class="side-nav">
-                <a href="#">الدخول</a>
+                @if($auth_user->type == 1 ||$auth_user->type == 2 ||$auth_user->type == 3)  
+                <a href="{{route('admin.dashboard')}}">صفحتي</a>
+                @elseif($auth_user->type == 0)  
+                <a href="{{route('member.dashboard')}}">صفحتي</a>  
+                @endif  
               </div>
-              <div class="side-nav">
-                <a href="#">صفحتي</a>
+            @else 
+               <div class="side-nav">
+                <a href="{{route('register.member')}}">انضم لنا</a>
               </div>
-            </div>
+            @endif 
+             </div>
+    
           </nav>
         </div>
            @if(count($errors)>0)
