@@ -40,15 +40,17 @@ class MemberRequest extends FormRequest
             'city' => 'required|string|max:200',
             'status'   => '',
             'verify'   => '',
-            'captcha' => 'required|captcha'
         ];
 
         if ($this->isMethod('post')) {
             $flag = false;
              if($auth_user){
+              $valid['captcha'] = 'captcha';     
                 if($auth_user->type != 0)
                 $flag = true;
-            }
+            }else{
+                 $valid['captcha'] = 'required|captcha'; 
+             }
             $valid['password'] = 'required|string|min:8|confirmed';
             if($flag)
                 $valid['email'] = 'required|email|max:80|confirmed';

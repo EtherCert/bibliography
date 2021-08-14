@@ -67,7 +67,7 @@
                     </div>
                   </div>
                 </form>
-                <div class="table-responsive">
+                <div class="table-responsive" style="font-size: 85%;">
                   <table class="table table-hover table-striped">
                     <thead>
                       <tr>
@@ -147,6 +147,13 @@
                                   <span class="kt-nav__link-text">سبب الرفض</span>
                                   </a>
                                 </li>
+                                @endif 
+                                @if($study->admin_note)    
+                                <li class="kt-nav__item" style="float: center;">
+                                  <a  data-admin_note="{{$study->admin_note}}"  class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_2">  <i class="kt-nav__link-icon fa fa-sticky-note"></i>
+                                  <span class="kt-nav__link-text">ملاحظات الإدارة</span>
+                                  </a>
+                                </li>
                                 @endif
                                 @if($study->study_state != 'منشورة')  
                                 <li class="kt-nav__item" style="float: center;">
@@ -202,13 +209,37 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="kt_modal_2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ملاحظات الإدارة</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="admin_note" style="text-align: justify;"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">إغلاق</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  $(document).ready(function() {
-   $('#kt_modal_1').on('show.bs.modal', function(e) {
-   var refuse_reason = $(e.relatedTarget).data('refuse_reason');
-   document.getElementById("refuse_reason").textContent = refuse_reason; 
-   });
-   });
+$(document).ready(function() {
+$('#kt_modal_1').on('show.bs.modal', function(e) {
+var refuse_reason = $(e.relatedTarget).data('refuse_reason');
+document.getElementById("refuse_reason").textContent = refuse_reason; 
+});
+});
+    
+$(document).ready(function() {
+$('#kt_modal_2').on('show.bs.modal', function(e) {
+var admin_note = $(e.relatedTarget).data('admin_note');
+document.getElementById("admin_note").textContent = admin_note; 
+});
+});    
 </script>
 <script>
   document.getElementById("studies").className += " kt-menu__item--active";

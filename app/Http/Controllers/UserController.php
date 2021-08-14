@@ -11,6 +11,8 @@ use Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class UserController extends Controller
 {
@@ -32,8 +34,8 @@ class UserController extends Controller
         $status = request()->query('status', '');
         $auth_user = Auth::user();
         
-         $users = User::
-         when($name, function($query, $name) {
+        $users = User::
+        when($name, function($query, $name) {
                         return $query->where('name', 'LIKE', '%' . $name . '%');
                     })
                     ->when($status, function($query, $status) {
@@ -371,4 +373,40 @@ class UserController extends Controller
             abort(404);
         }
     }
+    public function forgetUsernameView(){
+         return view('auth.passwords.forget_username');
+     } 
+     public function forgetUsername(Request $request){
+       $request->validate([
+           'email' => 'required|email',
+        ]);
+     $settings = Setting::select('siteName')->where('id','=','1')->get()->first();
+    
+    $user = User::where('email', '=' , $request->email)->get()->first();
+    if(!$user){
+        alert()->error('لا يوجد مستخدم مسجل بهذا الإيميل', $settings->siteName);
+        
+        return redirect()->back()->with('message_flash');
+   } 
+    //notify email
+        $data = array(
+        'name' => 'استرجاع اسم المستخدم',
+        'message' => '<br>' .'اسم المستخدم الخاص بك هو :   '. '  '. $user->username ,
+       );
+        $destination = $user->email;
+        try
+        {
+            Mail::to($destination)->send(new SendMail($data));
+        }
+        catch(\Exception $e)
+        {
+            //alert()->error($e->getMessage());
+            //alert()->error('لم يتم إرسال رسالة على البريد الإلكتروني للعضو');
+        }
+        //////////// End Mail 
+         alert()->success('تم إرسال اسم المستخدم، راجع البريد الإلكتروني', $settings->siteName);
+        
+        return redirect()->back()->with('message_flash');
+      
+ }
 }

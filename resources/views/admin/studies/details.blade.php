@@ -2,6 +2,7 @@
 $mobile = $study->userMembers->mobile;
 if(substr($mobile, 0, 3 ) !== "966" && substr($mobile, 0, 4 ) !== "+966" && substr($mobile, 0, 5 ) !== "00966")
 $mobile = '966'.$mobile;
+$auth_user = Auth::user();
 ?>
 @extends('../layouts.include-admin')
 @section('title', 'الدراسة | التفاصيل') 
@@ -262,7 +263,9 @@ $mobile = '966'.$mobile;
                             @if($study->userAdmins) 
                             @if($study->userAdmins->type != 3) 
                             <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
-                            @endif  
+                            @endif 
+                            @elseif($auth_user->type == 1) 
+                               <option {{ $study->study_state == 'منشورة'? ' selected' : '' }} value="منشورة">منشورة</option>
                             @endif 
                             <option {{ $study->study_state == 'مرفوضة'? ' selected' : '' }} value="مرفوضة">مرفوضة</option>
                           </select>

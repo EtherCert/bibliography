@@ -123,7 +123,7 @@
                             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(15px, 5px, 0px);">
                               <ul class="kt-nav">
                                 <li class="kt-nav__item" style="float: center;">
-                                  <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="kt-nav__link"> 
+                                  <a href="{{ route('admin.members.edit', ['id' => $user->id]) }}" class="kt-nav__link"> 
                                   <i class="kt-nav__link-icon fa fa-edit"></i>
                                   <span class="kt-nav__link-text">تعديل</span>
                                   </a>

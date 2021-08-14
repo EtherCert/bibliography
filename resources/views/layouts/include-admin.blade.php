@@ -1,13 +1,25 @@
 <?php
-  $user = Auth::user();
-   if(Auth::check())
-   {
-   $notifications = $user->notifications()->paginate(10);
-   }
-  use Carbon\Carbon;
-  Carbon::setLocale('ar');
-  $settings = App\Models\Setting::findOrFail(1);
-  ?>
+$user = Auth::user();
+if(Auth::check())
+{
+$notifications = $user->notifications()->paginate(10);
+}
+use Carbon\Carbon;
+Carbon::setLocale('ar');
+$settings = App\Models\Setting::findOrFail(1);
+
+$flag_full_admin = false;
+if($user->type == 1){
+$flag_full_admin = true; 
+}
+$user_type_name = '';
+if($user->type == 1)
+    $user_type_name = 'أدمن';
+else if($user->type == 2)
+    $user_type_name = 'معتمد';
+else if($user->type == 3)
+    $user_type_name = 'مراجع';
+?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <!-- begin::Head -->
@@ -188,11 +200,13 @@
                   <div id="sub-users" class="kt-menu__submenu ">
                     <span class="kt-menu__arrow"></span>
                     <ul class="kt-menu__subnav">
+                     @if($flag_full_admin)    
                       <li id="admins" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <a href="{{route('admin.users.index')}}" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
                         <span class="kt-menu__link-text">المسؤولون</span></a>
                       </li>
+                      @endif    
                       <li id="members" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                         <a href="{{route('admin.members.index')}}" class="kt-menu__link kt-menu__toggle">
                         <i class="kt-menu__link-bullet kt-menu__link-bullet--line"><span></span></i>
@@ -201,6 +215,7 @@
                     </ul>
                   </div>
                 </li>
+                @if($flag_full_admin)  
                 <li id="manage" class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
                   <a href="javascript:;" class="kt-menu__link kt-menu__toggle">
                   <span class="kt-menu__link-icon fa fa-cogs">
@@ -223,8 +238,17 @@
                     </ul>
                   </div>
                 </li>
+                @endif  
+                <?php  
+                  $contacts = \App\Models\Contact::select('id')
+                               ->where('status', '=', 'لم يتم الرد')->get();
+                ?> 
                 <li id="messages" class="kt-menu__item " aria-haspopup="true"><a href="{{route('admin.contacts.index')}}" class="kt-menu__link ">
-                  <i class="kt-menu__link-icon fa fa-envelope"></i><span class="kt-menu__link-text">رسائل الزوار</span></a>
+                <i class="kt-menu__link-icon fas fa-envelope"></i><span class="kt-menu__link-text">رسائل الزوار</span><span>
+                @if(count($contacts))    
+                <span class="kt-badge kt-badge--rounded kt-badge--brand">{{count($contacts)}}</span>
+                @endif    
+                </span></a>
                 </li>
              </ul>
             </div>
@@ -312,8 +336,8 @@
               <div class="kt-header__topbar-item kt-header__topbar-item--user">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px" aria-expanded="false">
                   <div class="kt-header__topbar-user">
-                    <span class="kt-header__topbar-welcome ">مرحبًا، </span>
-                    <span class="kt-header__topbar-username ">{{Auth::user()->name}}</span>
+                    <span class="kt-header__topbar-welcome ">مرحبًا،</span>
+                    <span class="kt-header__topbar-username ">{{Auth::user()->name}} ({{$user_type_name}})</span>
                   </div>
                 </div>
                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(5px, 49px, 0px);">

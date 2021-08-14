@@ -43,7 +43,13 @@
                                 نسيت كلمة المرور؟
                             </a>
                         @endif
-                        <br><br>
+                        <br>
+                        <div class="text-right p-t-8 p-b-31">
+                            <a href="{{ route('forget-username-view') }}">
+                                {{ __('نسيت اسم المستخدم؟') }}
+                            </a>
+                        </div> 
+                        <br>
                         <div class="col-lg-3">
                           <button type="submit" class="btn cmn-btn">دخول</button>
                         </div>

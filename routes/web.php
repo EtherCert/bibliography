@@ -84,7 +84,9 @@ Here Members
 */
 Route::get('/members', 'App\Http\Controllers\UserController@indexMembers')->name('members.index'); 
 Route::get('/members/details/{id}', 'App\Http\Controllers\UserController@detailsMember')->name('members.details'); 
-Route::get('/member/excel', 'App\Http\Controllers\ExportExcelController@exportMembers')->name('members.excel');     
+Route::get('/member/excel', 'App\Http\Controllers\ExportExcelController@exportMembers')->name('members.excel');  
+Route::get('/member/edit/{id}', 'App\Http\Controllers\HomeMemberController@editMemberByAdmin')->name('members.edit');    
+Route::put('/member/update/{id}', 'App\Http\Controllers\HomeMemberController@memeberUpdate')->name('members.update');     
 
 /* 
 |--------------------------------------------------------------------------
@@ -129,6 +131,14 @@ Auth::routes();
 Route::get('register-member', 'App\Http\Controllers\MemberController@create')->name('register.member');//مهم مهم
 Route::post('register-member', 'App\Http\Controllers\MemberController@store')->name('store.member');//مهم مهم
 Route::get('/reload-captcha', [App\Http\Controllers\MemberController::class, 'reloadCaptcha']);
+/* 
+|--------------------------------------------------------------------------
+Here Forget Username
+|--------------------------------------------------------------------------
+*/
+Route::get('/forget-username-view', 'App\Http\Controllers\UserController@forgetUsernameView')->name('forget-username-view');
+Route::post('/forget-username', 'App\Http\Controllers\UserController@forgetUsername')->name('forget-username');
+
 
 ////////////////////////////// Here Start Public //////////////////////////////
 /* 

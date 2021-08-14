@@ -10,6 +10,8 @@ use App\Http\Requests\StudyRequest;
 use Auth;
 use Response;
 use App\Notifications\General;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class StudyController extends Controller
 {
@@ -33,6 +35,14 @@ class StudyController extends Controller
         $title_ar = request()->query('title_ar', '');
         $study_type = request()->query('study_type', '');
         
+        if($auth_user->type == 1 ||$auth_user->type == 3)
+         $studies = Study::when($title_ar, function($query, $title_ar) {
+                        return $query->where('title_ar', 'LIKE', '%' . $title_ar . '%');
+                    })
+                    ->when($study_type, function($query, $study_type) {
+                        return $query->where('study_type', '=', $study_type);
+                    })->where('study_state' , '=' , $study_state)->orderBy('id', 'desc')->paginate($this->settings->num_of_elements);   
+        else
         $studies = $auth_user->adminStudies()
                    ->when($title_ar, function($query, $title_ar) {
                         return $query->where('title_ar', 'LIKE', '%' . $title_ar . '%');
@@ -300,7 +310,7 @@ class StudyController extends Controller
         $auth_user = Auth::user();
         $study = Study::findOrFail($id);
          
-         if(($study->admin_id == $auth_user->id &&  $auth_user->type != 1) ||  $auth_user->type == 1)
+         if(($study->admin_id == $auth_user->id &&  $auth_user->type != 1) ||  $auth_user->type == 1 ||  $auth_user->type == 3)
          return view('admin.studies.details')->with([
             'study'        => $study,
          ]);
@@ -367,14 +377,38 @@ class StudyController extends Controller
     }
     public function changeStatusOrTransfere(Request $request , $id){
       $study = Study::findOrFail($id);  
-      
-      $study->study_state = $request->study_state;  
+      $auth_user = Auth::user();
+        
+      if($request->study_state == 'منشورة' && $auth_user->type == 3 ) 
+        return view('admin.home.no-access');  
+      else      
+         $study->study_state = $request->study_state;  
+        
       if($request->admin_id > 0)    
       $study->admin_id = $request->admin_id;       
       $study->admin_note = $request->admin_note;       
       $study->refuse_reason = $request->refuse_reason;   
         
       $study->save(); 
+      $meber_study = User::findOrFail($study->member_id);    
+    
+      if($request->admin_note) {   
+         //notify email
+        $data = array(
+        'name' => 'ملاحظات من الإدارة',
+        'message' => '<br>' .$request->admin_note ,
+       );
+        $destination = $meber_study->email;
+        try
+        {
+            Mail::to($destination)->send(new SendMail($data));
+        }
+        catch(\Exception $e)
+        {
+            //alert()->error($e->getMessage());
+            //alert()->error('لم يتم إرسال رسالة على البريد الإلكتروني للعضو');
+        }
+      }
       
       return redirect()->back()->with(
                 [

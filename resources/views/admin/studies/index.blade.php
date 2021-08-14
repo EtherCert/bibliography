@@ -67,7 +67,7 @@
                     </div>
                   </div>
                 </form>
-                <div class="table-responsive">
+                <div class="table-responsive" style="font-size: 85%;">
                   <table class="table table-hover table-striped">
                     <thead>
                       <tr>

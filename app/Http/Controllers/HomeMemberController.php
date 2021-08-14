@@ -124,10 +124,21 @@ class HomeMemberController extends Controller
         }else{
             abort(404);
         }
+    }    
+    public function editMemberByAdmin($id)
+    {
+        $user = User::findOrFail($id);
+        
+        if($user->type == 0){
+           return view('admin.members.edit')->with('user', $user);
+        }else{
+            abort(404);
+        }
     }
-      public function memeberUpdate(MemberRequest $request){
-        if(Auth::check()){
-        $user = Auth::user();    
+      public function memeberUpdate(MemberRequest $request, $id){
+        $user = User::findOrFail($id);
+        
+        if($user->type == 0){   
         $name = $request->f_name .' '. $request->s_name .' '.$request->t_name . ' ' . $request->fo_name;
         $user->name = $name;        
         $user->mobile = $request->mobile;
@@ -144,7 +155,7 @@ class HomeMemberController extends Controller
         
         return back()->with(
                 [
-                    'message_flash'=> sprintf('تم تعديل بياناتك بنجاح! '),
+                    'message_flash'=> sprintf('تم التعديل بنجاح! '),
                     'alert' => 'alert-solid-success'
                 ]); 
         }else{

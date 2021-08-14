@@ -1,3 +1,22 @@
+<?php
+use App\Models\Study;
+use App\Models\User;
+
+$p_sc_studies_counter = count(Study::select('id')->where('study_type', '=' , 'دراسة علمية')->where('study_state' , '=' , 'منشورة')->get());
+$p_st_studies_counter = count(Study::select('id')->where('study_type', '=' , 'دراسة في مرحلة دراسات عليا')->where('study_state' , '=' , 'منشورة')->get());
+$studies_counter = count(Study::select('id')->where('study_state' , '=' , 'منشورة')->get());
+////
+$publish_studies = count(Study::select('id')->where('study_state' , '=' , 'منشورة')->get());
+$under_studies = count(Study::select('id')->where('study_state' , '=' , 'قيد المراجعة')->get());
+$refuse_studies = count(Study::select('id')->where('study_state' , '=' , 'مرفوضة')->get());
+/////
+$members_counter_verified = count(User::select('id')->where('type', '=' , '0')->where('email_verified_at' , '!=' , 'null')->get());         
+$members_counter_not_verified = count(User::select('id')->where('type', '=' , '0')->where('email_verified_at' , '=' , 'null')->get()); 
+/////
+$user_counter_admin = count(User::select('id')->where('type', '=' , '1')->get());         
+$user_counter_approve = count(User::select('id')->where('type', '=' , '2')->get());         
+$user_counter_review = count(User::select('id')->where('type', '=' , '3')->get());         
+?>
 @extends('../layouts.include-admin')
 @section('title', 'الرئيسة') 
 @section('content')
@@ -23,13 +42,14 @@
                                 </g>
                             </svg> </span>
                         <span class="kt-widget17__subtitle">
-                            الطلبات
+                            الدراسات
                         </span>
+                        <hr>    
                         <span style="color: #61af95; font-size: 80%; font-weight: bold;" class="kt-widget17__desc">
-                            <span style="font-size: 130%;">my dd889 </span> تم الرد عليها 
+                            <span style="font-size: 130%;"> {{$p_sc_studies_counter}} </span>عدد الدراسات العلمية المنشورة 
                         </span>
                         <span style="color: #d76080; font-size: 80%; font-weight: bold;" class="kt-widget17__desc">
-                            <span style="font-size: 130%;">my 777</span>لم يتم الرد عليها
+                            <span style="font-size: 130%;"> {{$p_st_studies_counter}} </span>عدد الدراسات في مرحلة الدراسات العليا المنشورة
                         </span>
                     </a>        
                     </div>
@@ -44,10 +64,19 @@
                                 </g>
                             </svg> </span>
                         <span class="kt-widget17__subtitle">
-                             الخدمات
+                             المسؤولون
                         </span>
-                        <span style="font-weight: bold;" class="kt-widget17__desc">
-                            my88888
+                          <hr> 
+                          <span style="font-weight: bold;" class="kt-widget17__desc">
+                            <span style="color: #61af95; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$user_counter_admin}} </span>المسؤولون 
+                        </span>
+                        <span style="color: #d76080; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$user_counter_approve}} </span>المعتمدون  
+                        </span>
+                        <span style="color: #f2a041; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$user_counter_review}} </span>المراجعون  
+                        </span>
                         </span>
                         </a>      
                     </div>
@@ -63,15 +92,16 @@
                                     <path d="M9.80428954,10.9142091 L9,12 L11.2222222,12 L11.2222222,16 L15.6666667,10 L15.4615385,10 L20.2072547,6.57253826 C20.4311176,6.4108595 20.7436609,6.46126971 20.9053396,6.68513259 C20.9668779,6.77033951 21,6.87277228 21,6.97787787 L21,17 C21,18.1045695 20.1045695,19 19,19 L5,19 C3.8954305,19 3,18.1045695 3,17 L3,6.97787787 C3,6.70173549 3.22385763,6.47787787 3.5,6.47787787 C3.60510559,6.47787787 3.70753836,6.51099993 3.79274528,6.57253826 L9.80428954,10.9142091 Z" id="Combined-Shape" fill="#000000"></path>
                                 </g>
                             </svg> </span>
-                        <span class="kt-widget17__subtitle">
-                            المستخدمون
+                         <span class="kt-widget17__subtitle">
+                            المشتركون
                         </span>
+                         <hr> 
                         <span style="font-weight: bold;" class="kt-widget17__desc">
                             <span style="color: #61af95; font-size: 80%;" class="kt-widget17__desc">
-                            <span style="font-size: 130%;">my 777</span> فعالون
+                            <span style="font-size: 130%;"> {{$members_counter_verified}} </span> بريد فعال
                         </span>
                         <span style="color: #d76080; font-size: 80%;" class="kt-widget17__desc">
-                            <span style="font-size: 130%;">my 88 </span>غير فعالين
+                            <span style="font-size: 130%;"> {{$members_counter_not_verified}} </span> بريد غير فعال 
                         </span>
                         </span>
                         </a>
@@ -87,10 +117,19 @@
                                 </g>
                             </svg> </span>
                         <span class="kt-widget17__subtitle">
-                            الأخبار
+                             حالة الدراسات
                         </span>
-                        <span style="font-weight: bold;" class="kt-widget17__desc">
-                            444444444444
+                            <hr> 
+                          <span style="font-weight: bold;" class="kt-widget17__desc">
+                            <span style="color: #61af95; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$publish_studies}} </span>المنشورة  
+                        </span>
+                        <span style="color: #d76080; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$under_studies}} </span>قيد المراجعة  
+                        </span>
+                        <span style="color: #f2a041; font-size: 80%;" class="kt-widget17__desc">
+                            <span style="font-size: 130%;"> {{$refuse_studies}} </span>مرفوضة  
+                        </span>
                         </span>
                         </a>
                     </div>
@@ -99,7 +138,6 @@
         </div>
     </div>
 </div>
-
 <!--end:: Widgets/Activity-->
 </div>
 <script>

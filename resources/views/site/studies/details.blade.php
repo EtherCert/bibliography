@@ -72,17 +72,19 @@
             <span>التخصص:</span>
             {{$study->major}}
             </li>
-            <br><br>    
+            <br><br> 
+            @if($study->study_type == 'دراسة في مرحلة دراسات عليا')     
             <li>
             <span>المرحلة:</span>
             {{$study->phase}}
             </li>
-            <br><br>    
+            <br><br> 
             <li>
             <span>القسم:</span>
             {{$study->department_name}}
             </li>
-            <br><br>    
+            <br><br> 
+            @endif     
             <li>
             <span>مكان النشر:</span>
             {{$study->publish_place}}
@@ -106,12 +108,14 @@
             <span>الباحث:</span>
             {{$study->researcher_name}}
             </li>
-            <br><br>    
+            <br><br>
+            @if($study->study_type == 'دراسة في مرحلة دراسات عليا')    
             <li>
             <span>المشرف:</span>
             {{$study->supervisor_name}}
             </li>
-            <br><br>    
+            <br><br>
+            @endif    
             <li>
             <span>الناشر:</span>
             {{$study->publisher}}
@@ -159,7 +163,8 @@
             <span style="margin-top: -23px;"><a title="تنزيل" href="{{route('member.study.download-study',['id' => $study->id])}}"><i class="bx bx-download"></i></a></span>
             </li>
             </ul>
-            </div>    
+            </div>
+            @if($study->study_type == 'دراسة في مرحلة دراسات عليا')     
             <div class="related-inner">
             <ul class="align-items-center">
             <li>
@@ -168,6 +173,7 @@
             </li>
             </ul>
             </div>    
+            @endif
           </div>    
         </div>
       </div>

@@ -6,6 +6,7 @@ use App\Models\Study;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use RealRashid\SweetAlert\Facades\Alert;
+use Auth;
 
 class StateStudyExport implements FromCollection, WithHeadings 
 {
@@ -29,9 +30,14 @@ class StateStudyExport implements FromCollection, WithHeadings
     {
         $query = Study::select('title_ar','title_en','researcher_name','supervisor_name','created_at','major','summary_ar','summary_en','department_name','publisher','publish_place','number_of_pages','keywords','phase','study_type','publish_date')
                            ->where('study_type','=','دراسة في مرحلة دراسات عليا')
-                           ->where('study_state','=', $this->data)
-                           ->get();
+                           ->where('study_state','=', $this->data);
         
+        $auth_user = Auth::user();
+        
+        if($auth_user->type == 0)
+           $query = $query->where('member_id','=', $auth_user->id);
+        
+        $query = $query->get();
         return collect($query);
     }
 }
